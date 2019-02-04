@@ -1,0 +1,15 @@
+#!/bin/sh
+vol=$(amixer get Master | awk -F'[]%[]' '/%/ {if ($7 == "off") { print "MM" } else { print $2 }}' | head -n 1)
+mute=$(pacmd list-sinks|awk '/muted/ {print $2}')
+if [[ $mute == 'no' ]];then
+    if [ $vol -gt 75 ];then
+        printf "\ufa7d $vol%%\n"
+    elif [ $vol -gt 25 ] && [ $vol -lt 75 ];then
+        printf "\ufa7f $vol%%\n"
+    else
+        printf "\ufa7e $vol%%\n"
+    fi
+else
+    printf "\ufc5d 0%%\n"
+fi
+

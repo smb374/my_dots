@@ -1,0 +1,232 @@
+# i3 config file (v4)
+#
+# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+
+# mod key
+set $mod Mod4
+
+# fonts
+font pango: SauceCodePro Nerd Font, Awesome, WenQuanYi Micro Hei Mono 10
+
+# set workspace names
+set $tag1 "1:"
+set $tag2 "2:"
+set $tag3 "3:"
+set $tag4 "4:"
+set $tag5 "5:"
+set $tag6 "6:"
+set $tag7 "7:"
+set $tag8 "8:"
+set $tag9 "9:"
+set $tag10 "10:"
+# execs
+exec --no-startup-id feh --bg-fill '/home/thomas/Pictures/Wallpapers/67726338_p0.jpg'
+exec --no-startup-id compton &
+exec --no-startup-id nm-applet &
+exec --no-startup-id dunst &
+exec --no-startup-id aria2c --conf-path=/home/thomas/.aria2/config/aria2.conf -D &
+exec --no-startup-id fcitx &
+exec --no-startup-id clipit &
+exec --no-startup-id xss-lock -- betterlockscreen -l dim &
+# exec --no-startup-id volctl &
+exec --no-startup-id lxpolkit &
+exec --no-startup-id conky -c .i3.conkyrc -dq &
+exec audacious &
+exec --no-startup-id i3-msg $tag2 && st -n st
+exec --no-startup-id st -n neomutt_con -e neomutt
+exec --no-startup-id st -n weechat_con -e weechat
+
+assign [class="Google-chrome"] $tag1
+assign [class="Firefox"] $tag1
+assign [class="Audacious"] $tag5
+assign [instance="st"] $tag2
+assign [instance="neomutt"] $tag3
+assign [instance="weechat"] $tag4
+assign [class="Thunderbird"] $tag3
+assign [class="Lollypop"] $tag5
+for_window [class="Lollypop"] focus
+assign [class="Code"] $tag6
+for_window [class="Code"] focus
+assign [class="WebTorrent"] $tag7
+for_window [class="WebTorrent"] focus
+assign [class="Nicotine"] $tag9
+for_window [class="Nicotine"] focus
+# resolv i3 transparancy bug
+new_window pixel
+
+# start a terminal
+bindsym $mod+Return exec st
+
+# start drofi dmenu
+bindsym $mod+r      exec --no-startup-id rofi -show drun -font "Monaco for Powerline 18" -terminal st
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# kill focused window
+bindsym $mod+F4 kill
+
+# change focus
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+m focus right
+ 
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+m move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+h split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# Stack  mode
+bindsym $mod+z layout stacking
+# Tab mode
+bindsym $mod+x layout tabbed
+# Split Mode
+bindsym $mod+c layout toggle split
+# Switch between modes
+bindsym $mod+a layout toggle all
+# Fullscreen modw
+bindsym $mod+f fullscreen toggle
+# Floating mode
+bindsym $mod+space floating toggle
+bindsym $mod+g sticky toggle
+
+
+#scratchpad
+bindsym $mod+s scratchpad show
+bindsym $mod+Shift+s move scratchpad
+
+
+#Swith with same key to precedent workspace
+workspace_auto_back_and_forth yes
+
+
+#colors
+# class                 border  backgr. text    indicator child_border
+client.focused          #FFFFFF #FFFFFF #000000 #000000   #000000
+client.focused_inactive #333333 #5f676a #ffffff #484e50   #000000
+client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+client.urgent           #2f343a #900000 #ffffff #900000   #900000
+client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+
+#i3-gaps
+for_window [class="^.*"] border pixel 0
+gaps inner 4
+gaps outer -4
+smart_gaps on
+smart_borders on
+
+#rofi_power menu
+
+# apps
+bindsym $mod+Control+t exec thunar
+bindsym $mod+Control+n exec connman-gtk
+bindsym $mod+Shift+Return exec emacs
+
+# by class
+## floatings
+for_window [class="XTerm"] floating enable, border normal
+for_window [class="feh"] floating enable, border normal
+
+# assigns focus
+assign [class="Connman-gtk"] $tag10
+for_window [class="Connman-gtk"] focus
+
+#toggle workspace's display screen
+bindsym $mod+less move workspace to output right
+bindsym $mod+Shift+less move workspace to output up
+
+# switch to workspace
+bindsym $mod+1 workspace $tag1
+bindsym $mod+2 workspace $tag2
+bindsym $mod+3 workspace $tag3
+bindsym $mod+4 workspace $tag4
+bindsym $mod+5 workspace $tag5
+bindsym $mod+6 workspace $tag6
+bindsym $mod+7 workspace $tag7
+bindsym $mod+8 workspace $tag8
+bindsym $mod+9 workspace $tag9
+bindsym $mod+0 workspace $tag10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $tag1
+bindsym $mod+Shift+2 move container to workspace $tag2
+bindsym $mod+Shift+3 move container to workspace $tag3
+bindsym $mod+Shift+4 move container to workspace $tag4
+bindsym $mod+Shift+5 move container to workspace $tag5
+bindsym $mod+Shift+6 move container to workspace $tag6
+bindsym $mod+Shift+7 move container to workspace $tag7
+bindsym $mod+Shift+8 move container to workspace $tag8
+bindsym $mod+Shift+9 move container to workspace $tag9
+bindsym $mod+Shift+0 move container to workspace $tag10
+
+
+#assign workspace to screens
+workspace $tag1 output LVDS-1
+workspace $tag2 output LVDS-1
+workspace $tag3 output LVDS-1
+workspace $tag4 output LVDS-1
+workspace $tag5 output LVDS-1
+workspace $tag6 output LVDS-1
+workspace $tag7 output LVDS-1
+workspace $tag8 output LVDS-1
+workspace $tag9 output LVDS-1
+workspace $tag10 output LVDS-1
+
+#{% include 'by_os/' + ansible_distribution|lower + '/config.j2' ignore missing %}
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym mod1+Shift+r restart
+
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        bindsym j resize shrink width 10 px or 10 ppt
+        bindsym k resize grow height 10 px or 10 ppt
+        bindsym l resize shrink height 10 px or 10 ppt
+        bindsym m resize grow width 10 px or 10 ppt
+
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+Control+r mode "resize"
+
+# polybar exec
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+# Misc Controls
+bindsym XF86AudioRaiseVolume exec  amixer -q -D pulse sset Master 5%+
+bindsym XF86AudioLowerVolume exec  amixer -q -D pulse sset Master 5%-
+bindsym XF86AudioMute        exec  amixer -q -D pulse sset Master toggle
+bindsym XF86MonBrightnessDown exec xbacklight -dec 10
+bindsym XF86MonBrightnessUp exec  xbacklight -inc 10
+bindsym --release Print exec scrot ~/screenshots/%Y-%m-%d-%T-screenshot.png
+bindsym Control+$mod+l exec betterlockscreen -l dim
+bindsym Shift+$mod+e exec i3-msg exit

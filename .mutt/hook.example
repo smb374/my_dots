@@ -1,0 +1,14 @@
+set imap_user = "foo@gmail.com"
+set imap_pass = "foobarbarz"
+set smtp_url = "smtp://foo@smtp.gmail.com:587/"
+set smtp_pass = "foobarbarz"
+set from = "foo@gmail.com"
+set realname = "Bar Barz"
+set folder = "imaps://imap.gmail.com:993"
+set spoolfile = "+inbox"
+mailboxes = +inbox +starred +imp +sent +drafts +spam +trash
+set postponed = "+drafts"
+set header_cache = ~/.mutt/com.gmail.foo/cache/headers
+set message_cachedir = ~/.mutt/com.gmail.foo/cache/bodies
+set certificate_file = ~/.mutt/com.gmail.foo/certificates
+# vim: syntax=muttrc

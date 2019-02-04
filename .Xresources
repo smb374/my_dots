@@ -1,0 +1,208 @@
+UXterm*vt100*faceName: Monaco for Powerline:pixelsize:13:antialias:true
+UXterm*vt100*faceNameDoublesize: WenQuanYi Micro Hei Mono:pixelsize:13:antialias:true
+URxvt*font: xft:DroidSansMono Nerd Font Mono:size=9:minspace=true,xft:DroidSansMono Nerd Font Mono:size=9:minspace=true
+URxvt*urlLauncher:firefox
+URxvt*scrollBar:false
+URxvt*perl-ext-common: default,matcher
+URxvt*url-launcher: /usr/bin/firefox
+URxvt*matcher*button: 1
+URxvt*termName: xterm-256color
+! URxvt*background: rgba:2100/2100/2100/ffff
+
+! URxvt*letterSpace: 1
+! set input method
+URxvt*inputMethod: fcitx
+URxvt*preeditType: Root
+URxvt*imLocale: zh_TW.UTF-8
+URxvt*depth: 24
+!Below session is for Nord Theme
+! +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+! title      Nord XResources                                    +
+! project    nord-xresources                                    +
+! version    0.1.0                                              +
+! repository https://github.com/arcticicestudio/nord-xresources +
+! author     Arctic Ice Studio                                  +
+! email      development@arcticicestudio.com                    +
+! copyright  Copyright (C) 2016                                 +
+! +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#define nord0 #2E3440
+#define nord1 #3B4252
+#define nord2 #434C5E
+#define nord3 #4C566A
+#define nord4 #D8DEE9
+#define nord5 #E5E9F0
+#define nord6 #ECEFF4
+#define nord7 #8FBCBB
+#define nord8 #88C0D0
+#define nord9 #81A1C1
+#define nord10 #5E81AC
+#define nord11 #BF616A
+#define nord12 #D08770
+#define nord13 #EBCB8B
+#define nord14 #A3BE8C
+#define nord15 #B48EAD
+
+! *.foreground:   nord4
+! *.background:   nord0
+! *.cursorColor:  nord4
+! *fading: 35
+! *fadeColor: nord3
+!
+! *.color0: nord1
+! *.color1: nord11
+! *.color2: nord14
+! *.color3: nord13
+! *.color4: nord9
+! *.color5: nord15
+! *.color6: nord8
+! *.color7: nord5
+! *.color8: nord3
+! *.color9: nord11
+! *.color10: nord14
+! *.color11: nord13
+! *.color12: nord9
+! *.color13: nord15
+! *.color14: nord7
+! *.color15: nord6
+! #define blackgravel #1c1b1a
+! #define darkgravel #242321
+! #define deepgravel #45413b
+! #define mediumgravel #666462
+! #define gravel #857f78
+! #define plain #f8f6f2
+! #define lightgravel #998f84
+! #define snow #ffffff
+! #define taffy #ff2c4b
+! #define orange #ffa724
+! #define dalespale #fade3e
+! #define lime #aeee00
+! #define saltwatertaffy #8cffba
+! #define tardis #0a9dff
+! #define dress #ff9eb8
+! #define darkroast #88633f
+! #define   coffee           #c7915b
+! #define   dirtyblonde      #f4cf86
+!
+! *.foreground:   plain
+! *.background:   blackgravel
+! *.cursorColor:  plain
+! *.color0:       blackgravel
+! *.color1:       taffy
+! *.color2:       lime
+! *.color3:       dalespale
+! *.color4:       tardis
+! *.color5:       dress
+! *.color6:       saltwatertaffy
+! *.color7:       plain
+! *.color8:       mediumgravel
+! *.color9:       orange
+! *.color10:      coffee
+! *.color11:      dirtyblonde
+! *.color12:      gravel
+! *.color13:      lightgravel
+! *.color14:      darkroast
+! *.color15:      snow
+*.foreground: #ccb18b
+*.cursorcolor:#ccb18b
+*.colorbd:    #6699cc
+*.colorul:    #ccb18b
+*.colorit:    #ccb18b
+*background:  #2d2d31
+*color0:      #1a1a1a
+*color1:      #cc6666
+*color2:      #66aa66
+*color3:      #f0c674
+*color4:      #557799
+*color5:      #a374a8
+*color6:      #339999
+*color7:      #a3a3a3
+*color8:      #4d4d4d
+*color9:      #dd7777
+*color10:     #77bb77
+*color11:     #f2d785
+*color12:     #5588bb
+*color13:     #b485b9
+*color14:     #2fa7a7
+*color15:     #cccccc
+! *.background: #101010
+! *.foreground: #d0d0d0
+! !foreground: #66ff66
+! !highlight : #505050
+! *.cursorColor: #66ff66
+! *.color0: #101010
+! *.color1: #960050
+! *.color2: #66aa11
+! *.color3: #c47f2c
+! *.color4: #30309b
+! *.color5: #7e40a5
+! *.color6: #3579a8
+! *.color7: #9999aa
+! *.color8: #303030
+! *.color9: #ff0090
+! *.color10: #80ff00
+! *.color11: #ffba68
+! *.color12: #5f5fee
+! *.color13: #bb88dd
+! *.color14: #4eb4fa
+! *.color15: #d0d0d0
+! Emacs Session
+Emacs*FontBackend: xft
+Emacs*font: Meslo Nerd Font-9
+! Rofi Session
+! ::: rofi :::
+
+rofi.modi:                           ssh,window,drun,run
+rofi.sidebar-mode:                   true
+rofi.terminal:                       st
+rofi.ssh-client:                     ssh
+rofi.ssh-command:                    {terminal} -e "{ssh-client} {host}"
+rofi.opacity:                        100
+rofi.width:                          50
+rofi.lines:                          8
+rofi.columns:                        1
+rofi.font:                           Monaco for Powerline 14
+rofi.fg:                             #5294E2
+rofi.bg:                             #5d729f
+rofi.fg-active:                      #34405a
+rofi.fg-urgent:                      #34405a
+rofi.hlfg-active:                    #5e73a0
+rofi.hlfg-urgent:                    #5e73a0
+rofi.bg-active:                      #34405a
+rofi.bg-urgent:                      #34405a
+rofi.hlbg-active:                    #5d729f
+rofi.hlbg-urgent:                    #5d729f
+rofi.bgalt:                          #5671a0
+rofi.hlfg:                           #34405a
+rofi.hlbg:                           #34405a
+rofi.bc:                             #789ee1
+! State:           'bg',     'fg',     'bgalt',  'hlbg',   'hlfg'
+rofi.color-normal: #353944,  #FFFFFF,  #353944,  #5294E2,  #FFFFFF
+rofi.color-normal: #353944,  #FFFFFF,  #353944,  #5294E2,  #FFFFFF
+rofi.color-normal: #353944,  #FFFFFF,  #353944,  #5294E2,  #FFFFFF
+
+!                  'background', 'border'
+rofi.color-window: #353944,      #404552
+rofi.bw:                             10
+rofi.location:                       0
+rofi.padding:                        20
+rofi.levenshtein-sort:               true
+rofi.case-sensitive:                 false
+rofi.fuzzy:                          false
+rofi.line-margin:                    2
+rofi.separator-style:                solid
+rofi.hide-scrollbar:                 true
+rofi.markup-rows:                    false
+rofi.scrollbar-width:                8
+
+st.alpha: 204
+st.shell: "/bin/zsh"
+! st.font: "MesloLGMDZ Nerd Font:pixelsize=12:antialias=true:autohint=true"
+st.borderpx: 2
+st.xfps: 120
+st.actionfps: 30
+st.cwscale: 1.0
+st.chscale: 1.0
+st.blinktimeout: 800
+st.bellvolume: 0
+st.termname: "st-256color"
+st.tabspaces: 2

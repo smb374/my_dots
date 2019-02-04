@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+now=IO.readlines("/sys/class/backlight/intel_backlight/actual_brightness")
+max=IO.readlines("/sys/class/backlight/intel_backlight/max_brightness")
+percentage=((now[0].to_f/max[0].to_f+0.01)*100.0).to_i
+percentage-=1 if percentage==101
+if percentage >= 70
+    puts "\uf5df #{percentage}%"
+elsif percentage >= 30 && percentage < 70
+    puts "\uf5de #{percentage}%"
+else
+    puts "\uf5dd #{percentage}%"
+end

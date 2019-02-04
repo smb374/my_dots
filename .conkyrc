@@ -1,0 +1,139 @@
+conky.config = {
+    imlib_cache_size = 0,
+-- Use Xft?
+	use_xft = true,
+	font = "WenQuanYi Micro Hei Mono:size=8",
+	xftalpha = 1.0,
+	text_buffer_size = 2048,
+
+-- Update interval in seconds
+	update_interval = 1.0,
+
+-- This is the number of times Conky will update before quitting.
+-- Set to zero to run forever.
+	total_run_times = 0,
+
+	own_window = true,
+	own_window_transparent = false,
+	own_window_argb_visual = true,
+	own_window_argb_value = 204,
+    own_window_type = 'override',
+    --own_window_type = 'desktop',
+    --own_window_type = 'normal',--use this if you want a nice shadow to appear around conky
+
+-- If own_window is yes, these window manager hints may be used
+	own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+
+-- Use double buffering (reduces flicker, may not work for everyone)
+	double_buffer = true,
+
+-- Minimum size of text area
+	minimum_width = 230,
+    minimum_height = 0,
+
+-- Draw shades?
+	draw_shades = false,
+
+-- Draw outlines?
+	draw_outline = false,
+
+-- Draw borders around text
+	draw_borders = false,
+
+-- Stippled borders?
+	stippled_borders = 0,
+
+-- border margins
+-- border_margin 5
+
+-- border width
+	border_width = 1,
+
+-- Default colors and also border colors
+	default_color = "ebd1d0",
+--default_shade_color black
+--default_outline_color grey
+	own_window_colour = "e54438",
+
+-- Text alignment, other possible values are commented
+    alignment = 'top_left',
+    --alignment = 'top_right',
+    --alignment bottom_left,
+    --alignment bottom_right,
+
+-- Gap between borders of screen and text
+-- same thing as passing -x at command line
+	gap_x = 0,
+	gap_y = 25,
+
+-- Subtract file system buffers from used memory?
+	no_buffers = true,
+
+-- set to yes if you want all text to be in uppercase
+	uppercase = false,
+
+-- number of cpu samples to average
+-- set to 1 to disable averaging
+	cpu_avg_samples = 4,
+
+-- number of net samples to average
+-- set to 1 to disable averaging
+	net_avg_samples = 2,
+
+-- Force UTF8? note that UTF8 support required XFT
+	override_utf8_locale = true,
+
+-- Add spaces to keep things from moving about? This only affects certain objects.
+	use_spacer = 'none',
+
+};
+
+conky.text = [[
+SYSTEM ${hr 2}
+${voffset 1}${font Arial Black:style=Bold:size=12}\#!${font} Arch Linux ${alignr}rolling only
+Kernel: ${alignr}${kernel}
+Uptime:${alignr}$uptime 
+Load:${alignr}$loadavg
+CPU:${cpu}% ${alignr}${cpubar 8,60}
+${cpugraph}
+RAM: $memperc% ${alignr}${membar 8,60}
+SWAP: $swapperc% ${alignr}${swapbar 8,60}
+Uptime: ${alignr}${uptime}
+
+Top CPU Usage Processes: ${hr 2}
+Name${alignr} PID     CPU%    MEM%
+${hr}
+${top name 1}${alignr} ${top pid 1}   ${top cpu 1}  ${top mem 1}
+${top name 2}${alignr} ${top pid 2}   ${top cpu 2}  ${top mem 2}
+${top name 3}${alignr} ${top pid 3}   ${top cpu 3}  ${top mem 3}
+
+Top Mem Usage Processes: ${hr 2}
+Name${alignr} PID     CPU%   MEM%
+${hr}
+${top_mem name 1}${alignr} ${top_mem pid 1}   ${top_mem cpu 1} ${top_mem mem 1}
+${top_mem name 2}${alignr} ${top_mem pid 2}   ${top_mem cpu 2} ${top_mem mem 2}
+${top_mem name 3}${alignr} ${top_mem pid 3}   ${top_mem cpu 3} ${top_mem mem 3}
+
+NETWORK ${hr 2}
+Port(s)${alignr}\#Connections
+Inbound: ${tcp_portmon 1 32767 count} Outbound: ${tcp_portmon 32768 61000 count}${alignr}ALL: ${tcp_portmon 1 65535 count}
+${if_existing /proc/net/route wlp3s0}
+${voffset -6} Up: ${upspeed wlp3s0}${alignr}${upspeedgraph wlp3s0 8,60 black black}
+${voffset 4} Down: ${downspeed wlp3s0}${alignr}${downspeedgraph wlp3s0 8,60 black black}
+
+MUSIC ${hr 2}
+${font Arial Black:size=10}MPD is playing:
+${alignr}
+${alignr}
+${alignr}
+${alignr}
+${alignr}
+${alignr}
+${alignr}
+${exec ~/bin/cover_mpd.sh 160}${image /tmp/cover_mpd.png -p 3,485 -n}
+${font WenQuanYi Micro Hei Mono:size=8}${alignr}${exec perl ~/bin/mpd_artist.pl}
+${font WenQuanYi Micro Hei Mono:size=8}${alignr}${exec perl ~/bin/mpd_title.pl}
+${font WenQuanYi Micro Hei Mono:size=8}${alignr}${exec mpc -f %album% current}
+${alignr}${font WenQuanYi Micro Hei Mono:size=8}${exec mpc | perl -ne '/(\w+:\w+\/\w+:\w+)\ / and print "$1";'}
+${execibar 0.5 expr 100 \* $(perl ~/bin/mpd_outed_time.pl) \/ $(perl ~/bin/mpd_song_time.pl)}
+]];

@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+now=IO.readlines("/sys/class/power_supply/BAT0/charge_now")[0]
+max=IO.readlines("/sys/class/power_supply/BAT0/charge_full")[0]
+stat=IO.readlines("/sys/class/power_supply/BAT0/status")[0]
+percentage=((now.to_f/max.to_f+0.01)*100.0).to_i
+percentage-=1 if percentage==101
+if stat=~/Full/
+    puts "\uf240 100"
+else
+    if percentage >= 75
+        puts "\uf240 #{percentage}%"
+    elsif percentage >= 50 && percentage < 75
+        puts "\uf241 #{percentage}%"
+    elsif percentage >= 25 && percentage < 50
+        puts "\uf242 #{percentage}%"
+    else
+        puts "\uf243 #{percentage}%"
+    end
+end
