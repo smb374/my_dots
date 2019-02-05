@@ -244,7 +244,7 @@ myManageHook = composeAll
     , className =? "feh"              --> doFloat
     , className =? "Gpick"            --> doFloat
     , role      =? "pop-up"           --> doFloat
-    , className =? "ncmpcpp"          --> doShift tag5
+    , appName   =? "ncmpcpp"          --> doShift tag5
     , className =? "neomutt"          --> doShift tag3
     , className =? "weechat"          --> doShift tag4]
   where
@@ -299,14 +299,15 @@ myAddSpaces len str = sstr ++ replicate (len - length sstr) ' '
 myStartupHook = do
   setWMName "XMonad 0.15"
   spawn "$HOME/.config/polybar/launch_x.sh"
+  spawnOnce "dunst &"
   spawnOnce "feh --bg-fill '/home/thomas/Pictures/Wallpapers/34871417_p0.jpg'"
   spawnOnce "compton &"
   spawnOnce "nm-applet &"
-  spawnOnce "dunst &"
   spawnOnce "aria2c --conf-path=/home/thomas/.aria2/config/aria2.conf -D &"
   spawnOnce "fcitx &"
   spawnOnce "clipit &"
   spawnOnce "xss-lock -- betterlockscreen -l dim &"
+  spawnOnce "conky -c ~/.i3.conkyrc -dq"
   spawnOnce "lxpolkit &"
   spawnOnce "termite --class neomutt --name neomutt -e neomutt"
   spawnOnce "termite --class weechat --name weechat -e weechat"
