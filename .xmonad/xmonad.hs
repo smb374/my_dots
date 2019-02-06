@@ -186,7 +186,7 @@ myProgramKeys =
   , ("M-f"          , addName "Open firefox"    $ spawn myBrowser)
   , ("M-S-f"        , addName "Open chromium"   $ spawn "chromium")
   , ("M-g"          , addName "Open terminal"   $ spawn myTerminal)
-  , ("M-r"          , addName "Open Rofi"       $ spawn "rofi -show drun -font \"Monaco for Powerline 16\" -terminal termite")
+  , ("M-r"          , addName "Open Rofi"       $ spawn "rofi -location 0 -show drun -font \"Monaco for Powerline 16\" -terminal termite")
   , ("<Print>"      , addName "Take Screenshot" $ spawn "scrot ~/screenshots/%Y-%m-%d-%T-screenshot.png")
   ]
 
@@ -303,7 +303,7 @@ myStartupHook = do
   spawnOnce "feh --bg-fill '/home/thomas/Pictures/Wallpapers/34871417_p0.jpg'"
   spawnOnce "compton &"
   spawnOnce "nm-applet &"
-  spawnOnce "aria2c --conf-path=/home/thomas/.aria2/config/aria2.conf -D &"
+  spawnOnce "aria2c --conf-path=/home/thomas/.config/aria2/aria2.conf &"
   spawnOnce "fcitx &"
   spawnOnce "clipit &"
   spawnOnce "xss-lock -- betterlockscreen -l dim &"
@@ -311,7 +311,7 @@ myStartupHook = do
   spawnOnce "lxpolkit &"
   spawnOnce "termite --class neomutt --name neomutt -e neomutt"
   spawnOnce "termite --class weechat --name weechat -e weechat"
-  spawnOnce "urxvt -name ncmpcpp -e ncmpcpp"
+  spawnOnce "urxvt -geometry 100x10 -name ncmpcpp -e ncmpcpp"
 
 
 -- Config

@@ -1,6 +1,6 @@
 UXterm*vt100*faceName: Monaco for Powerline:pixelsize:13:antialias:true
 UXterm*vt100*faceNameDoublesize: WenQuanYi Micro Hei Mono:pixelsize:13:antialias:true
-URxvt*font: xft:DroidSansMono Nerd Font Mono:size=9:minspace=true,xft:DroidSansMono Nerd Font Mono:size=9:minspace=true
+URxvt*font: xft:MesloLGSDZ Nerd Font Mono:size=9:minspace=true,xft:WenQuanYi Micro Hei Mono:size=9:minspace=true
 URxvt*urlLauncher:firefox
 URxvt*scrollBar:false
 URxvt*perl-ext-common: default,matcher

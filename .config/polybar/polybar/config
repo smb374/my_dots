@@ -1,0 +1,228 @@
+[colors]
+background = #cc0e2048
+foreground = #8d9fb3
+foreground-alt = #8d9fb3
+background-alt = #cc071322
+alert = #bd2c40
+
+[settings]
+throttle-output = 5
+throttle-output-for = 10
+throttle-input-for = 30
+screenchange-reload = true
+pseudo-transparency = true
+
+[bar/top]
+monitor = LVDS-1
+monitor-strict = true
+dpi = 72
+bottom = false
+width = 100%
+height = 20
+offset-x = 0
+offset-y = 0
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+overline-size = 0
+overline-color = #f00
+
+border-size = 0
+border-color = ${colors.background}
+
+spacing = 1
+padding-left = 0
+padding-right = 2
+module-margin-left = 1
+module-margin-right = 2
+
+ 
+font-0 = WenQuanYi Micro Hei:pixelsize=12;2
+font-1 = NotoSansMono Nerd Font:pixelsize=12;2
+font-2 = Material Design Icons:pixelsize=12;2
+font-3 = unifont:size=10;2
+font-4 = siji:pixelsize=10;3
+font-5 = FontAwesome:pixelsize=14;2
+
+
+modules-left = i3
+; modules-left = xmonad
+modules-center = xwindow
+modules-right = cpu memory temperature backlight battery pulseaudio date
+tray-position = right
+tray-padding = 2
+; tray-background = ${colors.background}
+;wm-restack = i3
+
+
+[module/bspwm]
+type = internal/bspwm
+ws-icon-default = x
+
+label-focused = %index%
+label-focused-background = ${colors.background-alt}
+label-focused-padding = 2
+
+label-occupied = %index%
+label-occupied-padding = 2
+
+label-urgent = %index%!
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 2
+
+label-empty = %index%
+label-empty-foreground = ${colors.foreground-alt}
+label-empty-padding = 2
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+index-sort = true
+wrapping-scroll = false
+strip-wsnumbers = true
+pin-workspaces = true
+
+label-mode-padding = 2
+label-mode-foreground = #000
+label-mode-background = #828bb9
+
+label-focused = %index% %name%
+label-focused-background = ${module/bspwm.label-focused-background}
+label-focused-padding = ${module/bspwm.label-focused-padding}
+
+label-unfocused = %index% %name%
+label-unfocused-padding = ${module/bspwm.label-occupied-padding}
+
+label-urgent = %index% %name%!
+label-urgent-background = ${module/bspwm.label-urgent-background}
+label-urgent-padding = ${module/bspwm.label-urgent-padding}
+
+label-visible = %index% %name%
+label-visible-background = ${self.label-focused-background}
+label-visible-padding = ${self.label-focused-padding}
+
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+ws-icon-5 = 6;
+ws-icon-6 = 7;
+ws-icon-7 = 8;
+ws-icon-8 = 9;
+ws-icon-9 = 10;
+[module/xmonad]
+type = custom/script
+exec = xmonad-log
+
+tail = true
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:23:...%
+label-foreground = ${colors.foreground-alt}
+
+[module/backlight]
+type = internal/backlight
+card = intel_backlight
+enable-scroll = false
+; output = LVDS-1
+format = <ramp> <label>
+label = %percentage%%
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+
+[module/date]
+type = internal/date
+interval = 1
+
+date = "%y%m%d"
+date-alt = " %d"
+
+time = "%H%M%S"
+time-alt =  %H%M
+
+format-prefix-foreground = ${colors.foreground-alt}
+
+label = %date% %time%
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = AC
+full-at = 98
+time-format = "%H:%M"
+
+label-discharging = %percentage% %time%
+
+format-charging = <animation-charging> <label-charging>
+
+format-discharging = <ramp-capacity> <label-discharging>
+
+format-full-prefix = " "
+format-full-prefix-foreground = ${colors.foreground}
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+ramp-capacity-foreground = ${colors.foreground}
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-foreground = ${colors.foreground}
+animation-charging-framerate = 750
+
+
+[module/cpu]
+type = internal/cpu
+label =  %percentage%%
+
+
+[module/memory]
+type = internal/memory
+label =  %gb_used%
+
+[module/temperature]
+type = internal/temperature
+thermal-zone = 0
+warn-temperature = 60
+
+format = <ramp> <label>
+format-warn = <ramp> <label-warn>
+
+label = %temperature-c%
+label-warn = %temperature-c%
+label-warn-foreground = #e60053
+
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+ramp-foreground = ${colors.foreground}
+
+[module/volume]
+type = internal/volume
+
+format-volume = <ramp-volume> <label-volume>
+format-muted = ﱝ 0%
+ramp-volume-0 = 奄
+ramp-volume-1 = 奔
+ramp-volume-2 = 墳
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+sink = alsa_output.pci-0000_00_1b.0.analog-stereo
+use-ui-max = true
+interval = 5
+format-volume = <ramp-volume> <label-volume>
+label-muted = ﱝ 0%
+ramp-volume-0 = 奄
+ramp-volume-1 = 奔
+ramp-volume-2 = 墳
+; vim:ft=dosini
