@@ -311,7 +311,7 @@ myStartupHook = do
   spawnOnce "lxpolkit &"
   spawnOnce "termite --class neomutt --name neomutt -e neomutt"
   spawnOnce "termite --class weechat --name weechat -e weechat"
-  spawnOnce "urxvt -geometry 100x10 -name ncmpcpp -e ncmpcpp"
+  spawnOnce "urxvt -geometry 150x10 -name ncmpcpp -e ncmpcpp"
 
 
 -- Config
