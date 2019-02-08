@@ -3,7 +3,7 @@ background = #cce54438
 foreground = #ebd1d0
 foreground-alt = #ebd1d0
 background-alt = #cc961319
-alert = #ccbd2c40
+alert = #bd2c40
 
 [settings]
 throttle-output = 5
@@ -13,7 +13,7 @@ screenchange-reload = true
 pseudo-transparency = true
 
 [bar/top]
-monitor = LVDS-1
+monitor = ${env:MONITOR:fallback-value}
 monitor-strict = true
 dpi = 72
 bottom = false
@@ -21,6 +21,7 @@ width = 100%
 height = 20
 offset-x = 0
 offset-y = 0
+enable-ipc = true
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -31,8 +32,7 @@ overline-color = #f00
 border-size = 0
 border-color = ${colors.background}
 
-spacing = 1
-padding-left = 0
+padding-left = 2
 padding-right = 2
 module-margin-left = 1
 module-margin-right = 2
@@ -46,12 +46,12 @@ font-4 = siji:pixelsize=10;3
 font-5 = FontAwesome:pixelsize=14;2
 
 
-modules-left = hostname xmonad
+modules-left = powermenu hostname xmonad
 modules-center = 
-modules-right = cpu memory temperature backlights battery pulseaudio pkg date
+modules-right = cpu memory temperature backlights battery pulseaudio github date
 
 [bar/bottom]
-monitor = LVDS-1
+monitor = ${env:MONITOR:fallback-value}
 monitor-strict = true
 dpi = 72
 bottom = true
@@ -216,12 +216,35 @@ animation-charging-framerate = 750
 
 [module/cpu]
 type = internal/cpu
-label =  %percentage%%
+; Available tags:
+;   <label> (default)
+;   <bar-load>
+;   <ramp-load>
+;   <ramp-coreload>
+format = <label> <ramp-coreload>
+label =  %percentage%%
+
+; Available tokens:
+;   %percentage% (default) - total cpu load averaged over all cores
+;   %percentage-sum% - Cumulative load on all cores
+;   %percentage-cores% - load percentage for each core
+;   %percentage-core[1-9]% - load percentage for specific core
+
+; Spacing between individual per-core ramps
+ramp-coreload-spacing = 1
+ramp-coreload-0 = ▁
+ramp-coreload-1 = ▂
+ramp-coreload-2 = ▃
+ramp-coreload-3 = ▄
+ramp-coreload-4 = ▅
+ramp-coreload-5 = ▆
+ramp-coreload-6 = ▇
+ramp-coreload-7 = █
 
 
 [module/memory]
 type = internal/memory
-label =  %gb_used%
+label = ﬙ %gb_used%
 
 [module/temperature]
 type = internal/temperature
@@ -297,7 +320,7 @@ format-online = <icon-prev><icon-seekb><icon-stop><toggle><icon-seekf><icon-next
 
 ; Available tags:
 ;   <label-offline>
-;format-offline = <label-offline>
+format-offline = <label-offline>
 
 ; Available tokens:
 ;   %artist%
@@ -306,7 +329,7 @@ format-online = <icon-prev><icon-seekb><icon-stop><toggle><icon-seekf><icon-next
 ;   %date%
 ;   %title%
 ; Default: %artist% - %title%
-label-song =  %album% | %artist% - %title%
+label-song =  %album% ﴁ %artist%  %title%
 
 ; Available tokens:
 ;   %elapsed%
@@ -341,6 +364,7 @@ bar-progress-width = 15
 bar-progress-indicator = >
 bar-progress-fill = ─
 bar-progress-empty = \
+
 [module/hostname]
 type = custom/script
 interval = 256
@@ -350,4 +374,36 @@ format-prefix-foreground = ${colors.foreground-alt}
 format-padding = 0
 format-background = ${colors.background}
 exec = echo "$(whoami)@$(uname -n) ~>"
+
+[module/github]
+type = internal/github
+; Available tags:
+;   <label> (default)
+format = <label>
+
+; Available tokens:
+;   %notifications% (default)
+; Default: Notifications: %notifications%
+label = ﯙ %notifications%
+; Accessing an access token stored in file
+token = ${file:/home/thomas/github_access.token}
+; Whether empty notifications should be displayed or not
+empty-notifications = false
+; Number of seconds in between requests
+interval = 10
+[module/powermenu]
+type = custom/menu
+label-open = ""
+; label-open-foreground = ${colors.alert}
+label-close = ""
+label-separator = " / "
+; reboot
+menu-0-1 = ""
+menu-0-1-exec = systemctl reboot
+; shutdown
+menu-0-0 = ""
+menu-0-0-exec = systemctl poweroff
+; suspend
+menu-0-2 = ""
+menu-0-2-exec = systemctl suspend
 ; vim:ft=dosini
