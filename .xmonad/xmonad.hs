@@ -30,6 +30,7 @@ import XMonad.Layout.SimplestFloat
 import XMonad.Layout.Tabbed
 import XMonad.Layout.ThreeColumns
 import XMonad.Prompt
+import XMonad.Prompt.Shell
 import qualified DBus as D
 import qualified DBus.Client as D
 import qualified XMonad.Layout.BoringWindows as B
@@ -56,7 +57,7 @@ main = do
 -- General config
 
 myBar          = "xmobar ~/.xmonad/xmobarrc"
-myTerminal     = "termite --class termite --name termite"
+myTerminal     = "st"
 myModMask      = mod4Mask
 myBorderWidth  = 0
 myBrowser      = "firefox"
@@ -135,7 +136,7 @@ myPromptTheme = def
   , bgHLight          = pur2
   , borderColor       = pur2
   , promptBorderWidth = 0
-  , height            = prompt
+  {- , height            = prompt -}
   , position          = Top
   }
 
@@ -186,8 +187,9 @@ myProgramKeys =
   , ("M-f"          , addName "Open firefox"    $ spawn myBrowser)
   , ("M-S-f"        , addName "Open chromium"   $ spawn "chromium")
   , ("M-g"          , addName "Open terminal"   $ spawn myTerminal)
-  , ("M-r"          , addName "Open Rofi"       $ spawn "rofi -location 0 -show drun -font \"Monaco for Powerline 16\" -terminal termite")
+  , ("M-r"          , addName "Open Rofi"       $ spawn "rofi -location 0 -show drun -font \"Monaco for Powerline 16\" -terminal st")
   , ("<Print>"      , addName "Take Screenshot" $ spawn "scrot ~/screenshots/%Y-%m-%d-%T-screenshot.png")
+  {- , ("M-p"          , addName "Prompt"          $ shellPrompt coldPromptTheme) -}
   ]
 
 myWindowManagerKeys =
@@ -309,8 +311,8 @@ myStartupHook = do
   spawnOnce "xss-lock -- betterlockscreen -l dim &"
   spawnOnce "conky -c ~/.i3.conkyrc -dq"
   spawnOnce "lxpolkit &"
-  spawnOnce "termite --class neomutt --name neomutt -e neomutt"
-  spawnOnce "termite --class weechat --name weechat -e weechat"
+  spawnOnce "st -c neomutt -n neomutt -e neomutt"
+  spawnOnce "st -c weechat -n weechat -e weechat"
   spawnOnce "urxvt -geometry 150x10 -name ncmpcpp -e ncmpcpp"
 
 
