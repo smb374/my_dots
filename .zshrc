@@ -119,7 +119,7 @@ alias pacman='pacman --color auto'
 alias ls='ls --color=always'
 alias ll='ls -hal'
 alias grep='grep --color=auto'
-alias pfetch="gallery-dl -u supermariobros374@gmail.com -p thomas374 https://www.pixiv.net/bookmark.php"
+alias pfetch="gallery-dl -u foo@bar -p barz https://www.pixiv.net/bookmark.php"
 alias rs='screen -r'
 alias tnew='tmux new -s'
 alias tat='tmux attach -t'
