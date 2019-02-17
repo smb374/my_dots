@@ -2,7 +2,8 @@
 source <(antibody init)
 antibody bundle < ~/.zsh_plugins.txt
 source /etc/profile.d/plan9.sh
-export WINEPREFIX="/home/thomas/.local/share/wineprefixes/osu/"
+source ~/.profile
+
 if [ $TILIX_ID  ] || [ $VTE_VERSION  ]; then
     source /etc/profile.d/vte.sh
 fi
@@ -40,12 +41,13 @@ alias freeup='sudo zsh -c "echo 3 > /proc/sys/vm/drop_caches"'
 alias updategrub='sudo sh -c "ZPOOL_VDEV_NAME_PATH=1 grub-mkconfig > /boot/grub/grub.cfg"'
 alias termite='termite --class termite --name termite'
 alias jwine='LC_ALL=ja_JP.UTF-8 wine '
+alias dmesg='dmesg --color=always | less'
 
+export WINEPREFIX="/home/thomas/.local/share/wineprefixes/osu/"
 export VISUAL="emacs -nw"
 export theme_nerd_fonts=yes
 export theme_color_scheme="zenburn"
 export VBOX_USB="usbfs"
-source ~/.profile
 export ANDROID_SDK_PATH=/home/thomas/android-sdk
 export ANDROID_NDK_PATH=/home/thomas/android-ndk-r16
 export LESSOPEN="| /usr/bin/source-highlight-esc.sh %s"
@@ -61,9 +63,8 @@ export PATH="/home/thomas/bin/toolchains/x86_64-linux-musl-cross/bin:~/.cabal/bi
 export PROMPT_COMMAND='echo -ne "\033]2;$(PWD/#$(HOME)/\~)\007"'
 export MPD_HOST=/home/thomas/.config/mpd/socket
 export LD_LIBRARY_PATH="/usr/lib64/nvidia/xorg/:/usr/lib32/nvidia/xorg/:/usr/lib64/nvidia/:/usr/lib32/nvidia:/usr/lib:"
+export INPUTRC=/home/thomas/.inputrc
 eval $(thefuck --alias)
-alias dmesg='dmesg --color=always | less'
-# (cat ~/.cache/wal/sequences &)
 case "$TERM" in
     xterm*)
         if [ -e /usr/share/terminfo/x/xterm-256color ]; then
@@ -80,13 +81,17 @@ case "$TERM" in
 esac
 
 export MPD_HOST=$HOME/.config/mpd/socket
+
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
+bindkey "${terminfo[khome]}" beginning-of-line
+bindkey "${terminfo[kend]}" end-of-line
 bindkey -e
 echo '' > /tmp/album
 HISTFILE=/home/thomas/.zsh_history
 HISTSIZE=1000000
 SAVEHIST=1000000
+
 setopt APPEND_HISTORY
 setopt BANG_HIST
 setopt EXTENDED_HISTORY
@@ -100,6 +105,7 @@ setopt INC_APPEND_HISTORY
 setopt SHARE_HISTORY
 #setopt INC_APPEND_HISTORY_TIME
 setopt SHARE_HISTORY
+
 zstyle ':completion:*' completer _oldlist _expand _complete _match _ignored _approximate
 zstyle ':completion:*' completions 0
 zstyle ':completion:*' format 'Completing %d'
@@ -124,6 +130,7 @@ zstyle ':completion:*:descriptions' format '%U%F{yellow}%d%f%u'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 zstyle ':completion:*:kill:*' force-list always
 zstyle ':completion:*:processes' command 'ps -au$USER'
+
 autoload -U compinit
 autoload -U complist
 [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]] && compinit || compinit -C

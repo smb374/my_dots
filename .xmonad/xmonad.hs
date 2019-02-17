@@ -187,7 +187,7 @@ myProgramKeys =
   , ("M-f"          , addName "Open firefox"    $ spawn myBrowser)
   , ("M-S-f"        , addName "Open chromium"   $ spawn "chromium")
   , ("M-g"          , addName "Open terminal"   $ spawn myTerminal)
-  , ("M-r"          , addName "Open Rofi"       $ spawn "rofi -location 0 -show drun -font \"Monaco for Powerline 16\" -terminal st")
+  , ("M-r"          , addName "Open Rofi"       $ spawn "rofi -location 0 -show drun -terminal st")
   , ("<Print>"      , addName "Take Screenshot" $ spawn "scrot ~/screenshots/%Y-%m-%d-%T-screenshot.png")
   {- , ("M-p"          , addName "Prompt"          $ shellPrompt coldPromptTheme) -}
   ]
@@ -313,7 +313,7 @@ myStartupHook = do
   spawnOnce "lxpolkit &"
   spawnOnce "st -c neomutt -n neomutt -e neomutt"
   spawnOnce "st -c weechat -n weechat -e weechat"
-  spawnOnce "urxvt -geometry 150x10 -name ncmpcpp -e ncmpcpp"
+  spawnOnce "st -g 150x10 -c ncmpcpp -n ncmpcpp -e ncmpcpp"
 
 
 -- Config
