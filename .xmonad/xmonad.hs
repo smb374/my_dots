@@ -45,14 +45,14 @@ import qualified Codec.Binary.UTF8.String as UTF8
 main :: IO ()
 
 main = do
-  dbus <- D.connectSession
-  D.requestName dbus (D.busName_ "org.xmonad.Log")
-    [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
-  xmonad
-    $ withUrgencyHook NoUrgencyHook
-    $ ewmh
-    $ addDescrKeys ((myModMask, xK_F1), xMessage) myAdditionalKeys
-    $ myConfig { logHook = dynamicLogWithPP (myLogHook dbus) }
+    dbus <- D.connectSession
+    D.requestName dbus (D.busName_ "org.xmonad.Log")
+        [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
+    xmonad
+        $ withUrgencyHook NoUrgencyHook
+        $ ewmh
+        $ addDescrKeys ((myModMask, xK_F1), xMessage) myAdditionalKeys
+        $ myConfig { logHook = dynamicLogWithPP (myLogHook dbus) }
 
 -- General config
 
@@ -117,40 +117,40 @@ myFull = renamed [Replace "Full"] $ spacing 0 $ noBorders Full
 myTile = renamed [Replace "Main"] $ spacing mySpacing $ ResizableTall 1 (3/100) (1/2) []
 my3cmi = renamed [Replace "3Col"] $ spacing mySpacing $ ThreeColMid 1 (3/100) (1/2)
 myMagn = renamed [Replace "Mag"]  $ noBorders $ limitWindows 3 $ magnifiercz' 1.4 $ FixedColumn 1 20 80 10
-myTab  = renamed [Replace "Tabbed"] $ spacing mySpacing $  tabbed shrinkText def {   fontName = "xft:WenQuanYi Micro Hei:pixelsize=10"
-                                                                                ,   inactiveColor = "#e54438"
-                                                                                ,   activeColor = "#961319"
-                                                                                ,   activeBorderColor = "#961319"
-                                                                                ,   inactiveBorderColor = "#e54438"
-                                                                                ,   activeTextColor = myblue
+myTab  = renamed [Replace "Tabbed"] $ spacing mySpacing $  tabbed shrinkText def{ fontName = "xft:WenQuanYi Micro Hei:pixelsize=10"
+                                                                                , inactiveColor = "#e54438"
+                                                                                , activeColor = "#961319"
+                                                                                , activeBorderColor = "#961319"
+                                                                                , inactiveBorderColor = "#e54438"
+                                                                                , activeTextColor = myblue
                                                                                 }
 
 -- Themes
 -- Prompt themes
 
 myPromptTheme = def
-  { font              = myFont
-  , bgColor           = darkgreen
-  , fgColor           = white
-  , fgHLight          = white
-  , bgHLight          = pur2
-  , borderColor       = pur2
-  , promptBorderWidth = 0
-  {- , height            = prompt -}
-  , position          = Top
-  }
+    { font              = myFont
+    , bgColor           = darkgreen
+    , fgColor           = white
+    , fgHLight          = white
+    , bgHLight          = pur2
+    , borderColor       = pur2
+    , promptBorderWidth = 0
+    {- , height            = prompt -}
+    , position          = Top
+    }
 
 warmPromptTheme = myPromptTheme
-  { bgColor           = yellow
-  , fgColor           = darkred
-  , position          = Top
-  }
+    { bgColor           = yellow
+    , fgColor           = darkred
+    , position          = Top
+    }
 
 coldPromptTheme = myPromptTheme
-  { bgColor           = aqua
-  , fgColor           = darkgreen
-  , position          = Top
-  }
+    { bgColor           = aqua
+    , fgColor           = darkgreen
+    , position          = Top
+    }
 
 -- Workspaces
 -- Use '\x' for displaying unicode.
@@ -172,71 +172,70 @@ myWorkspaces = [tag1, tag2, tag3, tag4, tag5, tag6, tag7, tag8, tag9]
 
 showKeybindings :: [((KeyMask, KeySym), NamedAction)] -> NamedAction
 showKeybindings x = addName "Show Keybindings" $ io $ do
-  h <- spawnPipe "zenity --text-info --font=adobe courier"
-  hPutStr h (unlines $ showKm x)
-  hClose h
-  return ()
+    h <- spawnPipe "zenity --text-info --font=adobe courier"
+    hPutStr h (unlines $ showKm x)
+    hClose h
+    return ()
 
 myAdditionalKeys c = (subtitle "Custom Keys":) $ mkNamedKeymap c $
-  myProgramKeys ++ myWindowManagerKeys ++ myMediaKeys
+    myProgramKeys ++ myWindowManagerKeys ++ myMediaKeys
 
 myProgramKeys =
-  [ ("C-M-l"        , addName "Lock computer"   $ spawn "betterlockscreen -l dim")
-  , ("M-s"          , addName "Open Steam"      $ spawn "steam")
-  , ("M-S-s"        , addName "Sleep"           $ spawn "systemctl suspend")
-  , ("M-f"          , addName "Open firefox"    $ spawn myBrowser)
-  , ("M-S-f"        , addName "Open chromium"   $ spawn "chromium")
-  , ("M-g"          , addName "Open terminal"   $ spawn myTerminal)
-  , ("M-r"          , addName "Open Rofi"       $ spawn "rofi -location 0 -show drun -terminal st")
-  , ("<Print>"      , addName "Take Screenshot" $ spawn "scrot ~/screenshots/%Y-%m-%d-%T-screenshot.png")
-  {- , ("M-p"          , addName "Prompt"          $ shellPrompt coldPromptTheme) -}
-  ]
+    [ ("C-S-l"        , addName "Lock computer"   $ spawn "betterlockscreen -l dim")
+    , ("M-s"          , addName "Open Steam"      $ spawn "steam")
+    , ("M-S-s"        , addName "Sleep"           $ spawn "systemctl suspend")
+    , ("M-f"          , addName "Open firefox"    $ spawn myBrowser)
+    , ("M-S-f"        , addName "Open chromium"   $ spawn "chromium")
+    , ("M-g"          , addName "Open terminal"   $ spawn myTerminal)
+    , ("M-r"          , addName "Open Rofi"       $ spawn "rofi -location 0 -show drun -terminal st")
+    , ("<Print>"      , addName "Take Screenshot" $ spawn "scrot ~/screenshots/%Y-%m-%d-%T-screenshot.png")
+    ]
 
 myWindowManagerKeys =
-  [ ("M-b"          , addName "Do (not) respect polybar"                        $ sendMessage ToggleStruts)
-  , ("M-S-b"        , addName "Increase spacing between windows"                $ incSpacing mySpacing)
-  , ("M-v"          , addName "Set default spacing between windows"             $ setSpacing mySpacing)
-  , ("M-S-v"        , addName "Decrease spacing between windows"                $ incSpacing (-mySpacing))
-  , ("M-c"          , addName "Set to default large spacing between windows"    $ setSpacing myLargeSpacing)
-  , ("M-S-<Left>"   , addName "Move to previous non empty workspace"            $ moveTo Prev NonEmptyWS)
-  , ("M-S-<Right>"  , addName "Move to next non empty workspace"                $ moveTo Next NonEmptyWS)
-  , ("M-z"          , addName "Resize"                                          $ sendMessage MirrorShrink)
-  , ("M-a"          , addName "Resize"                                          $ sendMessage MirrorExpand)
-  , ("M-C-h"        , addName "Expand"                                          $ sendMessage $ ShrinkFrom R)
-  , ("M-C-l"        , addName "Expand"                                          $ sendMessage $ ExpandTowards R)
-  , ("M-C-k"        , addName "Expand"                                          $ sendMessage $ ShrinkFrom D)
-  , ("M-C-j"        , addName "Expand"                                          $ sendMessage $ ExpandTowards D)
-  , ("M-s"          , addName "Expand"                                          $ sendMessage Swap)
-  , ("M-M1-s"       , addName "Expand"                                          $ sendMessage Rotate)
-  , ("M-S-l"        , addName "Float Resize"                                    $ withFocused(keysResizeWindow (10, 0) (0, 0)))
-  , ("M-S-h"        , addName "Float Resize"                                    $ withFocused(keysResizeWindow (-10, 0) (0, 0)))
-  , ("M-S-j"        , addName "Float Resize"                                    $ withFocused(keysResizeWindow (0, 10) (0, 0)))
-  , ("M-S-k"        , addName "Float Resize"                                    $ withFocused(keysResizeWindow (0, -10) (0, 0)))
-  , ("M-C-<Left>"   , addName "Float Move"                                      $ withFocused(keysMoveWindow (-10,0)))
-  , ("M-C-<Right>"  , addName "Float Move"                                      $ withFocused(keysMoveWindow (10,0)))
-  , ("M-C-<Up>"     , addName "Float Move"                                      $ withFocused(keysMoveWindow (0,-10)))
-  , ("M-C-<Down>"   , addName "Float Move"                                      $ withFocused(keysMoveWindow (0,10)))
-  ]
+    [ ("M-b"          , addName "Do (not) respect polybar"                        $ sendMessage ToggleStruts)
+    , ("M-S-b"        , addName "Increase spacing between windows"                $ incSpacing mySpacing)
+    , ("M-v"          , addName "Set default spacing between windows"             $ setSpacing mySpacing)
+    , ("M-S-v"        , addName "Decrease spacing between windows"                $ incSpacing (-mySpacing))
+    , ("M-c"          , addName "Set to default large spacing between windows"    $ setSpacing myLargeSpacing)
+    , ("M-S-<Left>"   , addName "Move to previous non empty workspace"            $ moveTo Prev NonEmptyWS)
+    , ("M-S-<Right>"  , addName "Move to next non empty workspace"                $ moveTo Next NonEmptyWS)
+    , ("M-z"          , addName "Resize"                                          $ sendMessage MirrorShrink)
+    , ("M-a"          , addName "Resize"                                          $ sendMessage MirrorExpand)
+    , ("M-C-h"        , addName "Expand"                                          $ sendMessage $ ShrinkFrom R)
+    , ("M-C-l"        , addName "Expand"                                          $ sendMessage $ ExpandTowards R)
+    , ("M-C-k"        , addName "Expand"                                          $ sendMessage $ ShrinkFrom D)
+    , ("M-C-j"        , addName "Expand"                                          $ sendMessage $ ExpandTowards D)
+    , ("M-s"          , addName "Expand"                                          $ sendMessage Swap)
+    , ("M-M1-s"       , addName "Expand"                                          $ sendMessage Rotate)
+    , ("M-S-l"        , addName "Float Resize"                                    $ withFocused(keysResizeWindow (10, 0) (0, 0)))
+    , ("M-S-h"        , addName "Float Resize"                                    $ withFocused(keysResizeWindow (-10, 0) (0, 0)))
+    , ("M-S-j"        , addName "Float Resize"                                    $ withFocused(keysResizeWindow (0, 10) (0, 0)))
+    , ("M-S-k"        , addName "Float Resize"                                    $ withFocused(keysResizeWindow (0, -10) (0, 0)))
+    , ("M-C-<Left>"   , addName "Float Move"                                      $ withFocused(keysMoveWindow (-10,0)))
+    , ("M-C-<Right>"  , addName "Float Move"                                      $ withFocused(keysMoveWindow (10,0)))
+    , ("M-C-<Up>"     , addName "Float Move"                                      $ withFocused(keysMoveWindow (0,-10)))
+    , ("M-C-<Down>"   , addName "Float Move"                                      $ withFocused(keysMoveWindow (0,10)))
+    ]
 
 myMediaKeys =
-  [ ("<XF86MonBrightnessUp>"   , addName "Increase backlight"   $ spawn "xbacklight -inc 10")
-  , ("<XF86MonBrightnessDown>" , addName "Decrease backlight"   $ spawn "xbacklight -dec 10")
-  -- mpc
-  , ("<XF86AudioPrev>"         , addName "Previous track"       $ spawn "mpc prev")
-  , ("<XF86AudioNext>"         , addName "Next track"           $ spawn "mpc next")
-  , ("<XF86AudioPlay>"         , addName "Toggle play/pause"    $ spawn "mpc toggle")
-  -- volume
-  , ("<XF86AudioRaiseVolume>"  , addName "Raise volume"         $ spawn "amixer -q -D pulse sset Master 5%+")
-  , ("<XF86AudioLowerVolume>"  , addName "Lower volume"         $ spawn "amixer -q -D pulse sset Master 5%-")
-  , ("<XF86AudioMute>"         , addName "Toggle mute"          $ spawn "amixer -q -D pulse sset Master toggle")
-  -- volume: for if meta keys are not available
-  , ("C-S-="                   , addName "Raise volume"         $ spawn "amixer -q -D pulse sset Master 5%+")
-  , ("C-S--"                   , addName "Lower volume"         $ spawn "amixer -q -D pulse sset Master 5%-")
-  -- media keys if meta keys are not available
-  , ("C-S-,"                   , addName "Previous track"       $ spawn "mpc prev")
-  , ("C-S-."                   , addName "Next track"           $ spawn "mpc next")
-  , ("C-S-/"                   , addName "Toggle play/pause"    $ spawn "mpc toggle")
-  ]
+    [ ("<XF86MonBrightnessUp>"   , addName "Increase backlight"   $ spawn "xbacklight -inc 10")
+    , ("<XF86MonBrightnessDown>" , addName "Decrease backlight"   $ spawn "xbacklight -dec 10")
+    -- mpc
+    , ("<XF86AudioPrev>"         , addName "Previous track"       $ spawn "mpc prev")
+    , ("<XF86AudioNext>"         , addName "Next track"           $ spawn "mpc next")
+    , ("<XF86AudioPlay>"         , addName "Toggle play/pause"    $ spawn "mpc toggle")
+    -- volume
+    , ("<XF86AudioRaiseVolume>"  , addName "Raise volume"         $ spawn "amixer -q -D pulse sset Master 5%+")
+    , ("<XF86AudioLowerVolume>"  , addName "Lower volume"         $ spawn "amixer -q -D pulse sset Master 5%-")
+    , ("<XF86AudioMute>"         , addName "Toggle mute"          $ spawn "amixer -q -D pulse sset Master toggle")
+    -- volume: for if meta keys are not available
+    , ("C-S-="                   , addName "Raise volume"         $ spawn "amixer -q -D pulse sset Master 5%+")
+    , ("C-S--"                   , addName "Lower volume"         $ spawn "amixer -q -D pulse sset Master 5%-")
+    -- media keys if meta keys are not available
+    , ("C-S-,"                   , addName "Previous track"       $ spawn "mpc prev")
+    , ("C-S-."                   , addName "Next track"           $ spawn "mpc next")
+    , ("C-S-/"                   , addName "Toggle play/pause"    $ spawn "mpc toggle")
+    ]
 -- ManageHook
 
 myManageHook = composeAll
@@ -249,8 +248,8 @@ myManageHook = composeAll
     , appName   =? "ncmpcpp"          --> doShift tag5
     , className =? "neomutt"          --> doShift tag3
     , className =? "weechat"          --> doShift tag4]
-  where
-    role = stringProperty "WM_WINDOW_ROLE"
+    where
+        role = stringProperty "WM_WINDOW_ROLE"
 
 myManageHook' = composeOne [ isFullscreen -?> doFullFloat ]
 
@@ -264,8 +263,9 @@ myLogHook dbus = def
     , ppVisible = wrap ("%{F" ++ blue ++ "} ") " %{F-}"
     , ppUrgent = wrap ("%{F" ++ red ++ "} ") " %{F-}"
     , ppHidden = wrap " " " "
+    , ppHiddenNoWindows = wrap " " " "
     , ppWsSep = ""
-    , ppSep = " | "
+    , ppSep = " > "
     , ppTitle = myAddSpaces 25
     }
 
@@ -276,10 +276,10 @@ dbusOutput dbus str = do
             D.signalBody = [D.toVariant $ UTF8.decodeString str]
         }
     D.emit dbus signal
-  where
-    objectPath = D.objectPath_ "/org/xmonad/Log"
-    interfaceName = D.interfaceName_ "org.xmonad.Log"
-    memberName = D.memberName_ "Update"
+    where
+        objectPath = D.objectPath_ "/org/xmonad/Log"
+        interfaceName = D.interfaceName_ "org.xmonad.Log"
+        memberName = D.memberName_ "Update"
 {- myLogHook h = dynamicLogWithPP $ wsPP { ppOutput = hPutStrLn h } -}
 {- wsPP = xmobarPP { -}
 {-     ppCurrent = xmobarColor blue2 "", -}
@@ -299,43 +299,43 @@ myAddSpaces len str = sstr ++ replicate (len - length sstr) ' '
 -- StartupHook
 
 myStartupHook = do
-  setWMName "XMonad 0.15"
-  spawn "$HOME/.config/polybar/launch_x.sh"
-  spawnOnce "dunst &"
-  spawnOnce "feh --bg-fill '/home/thomas/Pictures/Wallpapers/34871417_p0.jpg'"
-  spawnOnce "compton &"
-  spawnOnce "nm-applet &"
-  spawnOnce "aria2c --conf-path=/home/thomas/.config/aria2/aria2.conf &"
-  spawnOnce "fcitx &"
-  spawnOnce "clipit &"
-  spawnOnce "xss-lock -- betterlockscreen -l dim &"
-  spawnOnce "conky -c ~/.i3.conkyrc -dq"
-  spawnOnce "lxpolkit &"
-  spawnOnce "st -c neomutt -n neomutt -e neomutt"
-  spawnOnce "st -c weechat -n weechat -e weechat"
-  spawnOnce "st -g 150x10 -c ncmpcpp -n ncmpcpp -e ncmpcpp"
+    setWMName "XMonad 0.15"
+    spawn "$HOME/.config/polybar/launch_x.sh"
+    spawnOnce "dunst &"
+    spawnOnce "feh --bg-fill '/home/thomas/Pictures/Wallpapers/34871417_p0.jpg'"
+    spawnOnce "compton &"
+    spawnOnce "nm-applet &"
+    spawnOnce "aria2c --conf-path=/home/thomas/.config/aria2/aria2.conf &"
+    spawnOnce "fcitx &"
+    spawnOnce "clipit &"
+    spawnOnce "xss-lock -- betterlockscreen -l dim &"
+    spawnOnce "conky -c ~/.i3.conkyrc -dq"
+    spawnOnce "lxpolkit &"
+    spawnOnce "st -c neomutt -n neomutt -e neomutt"
+    spawnOnce "st -c weechat -n weechat -e weechat"
+    spawnOnce "st -g 150x10 -c ncmpcpp -n ncmpcpp -e ncmpcpp"
 
 
 -- Config
 
 myConfig = def
-  { terminal            = myTerminal
-  , layoutHook          = myLayouts
-  , manageHook          = placeHook(smart(0.5, 0.5))
-      <+> manageDocks
-      <+> myManageHook
-      <+> myManageHook'
-      <+> manageHook def
-  , handleEventHook     = docksEventHook
-      <+> minimizeEventHook
-      <+> fullscreenEventHook
-  , startupHook         = myStartupHook
-  , focusFollowsMouse   = True
-  , clickJustFocuses    = False
-  , borderWidth         = myBorderWidth
-  , normalBorderColor   = bg
-  , focusedBorderColor  = pur2
-  , workspaces          = myWorkspaces
-  , modMask             = myModMask
-  }
+    { terminal            = myTerminal
+    , layoutHook          = myLayouts
+    , manageHook          = placeHook(smart(0.5, 0.5))
+        <+> manageDocks
+        <+> myManageHook
+        <+> myManageHook'
+        <+> manageHook def
+    , handleEventHook     = docksEventHook
+        <+> minimizeEventHook
+        <+> fullscreenEventHook
+    , startupHook         = myStartupHook
+    , focusFollowsMouse   = True
+    , clickJustFocuses    = False
+    , borderWidth         = myBorderWidth
+    , normalBorderColor   = bg
+    , focusedBorderColor  = pur2
+    , workspaces          = myWorkspaces
+    , modMask             = myModMask
+    }
 

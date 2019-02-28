@@ -4,17 +4,6 @@ antibody bundle < ~/.zsh_plugins.txt
 source /etc/profile.d/plan9.sh
 source ~/.profile
 
-if [ $TILIX_ID  ] || [ $VTE_VERSION  ]; then
-    source /etc/profile.d/vte.sh
-fi
-### Powerlevel9k settings
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir dir_writable vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs history load time)
-POWERLEVEL9K_MODE='powerline'
-###
-### Alien
-export AM_INITIAL_LINE_FEED=2
-###
 alias sudo='sudo '
 alias pacman='pacman --color auto'
 alias ls='ls --color=always'
@@ -23,7 +12,7 @@ alias grep='grep --color=auto'
 alias pfetch="gallery-dl -u foo@bar -p barz https://www.pixiv.net/bookmark.php"
 alias rs='screen -r'
 alias tnew='tmux new -s'
-alias tat='tmux attach -t'
+alias tat='tmux a -t '
 alias emacs='emacs -nw'
 alias newmenu='mmaker -vf -t Xterm OpenBox3'
 alias aria2rpc='aria2c --conf-path=/home/thomas/.aria2/config/aria2.conf -D'
@@ -44,7 +33,8 @@ alias jwine='LC_ALL=ja_JP.UTF-8 wine '
 alias dmesg='dmesg --color=always | less'
 
 export WINEPREFIX="/home/thomas/.local/share/wineprefixes/osu/"
-export VISUAL="emacs -nw"
+export VISUAL="nvim"
+export EDITOR="nvim"
 export theme_nerd_fonts=yes
 export theme_color_scheme="zenburn"
 export VBOX_USB="usbfs"
@@ -57,13 +47,13 @@ export LXVST_PATH="/usr/lib/lxvst:/usr/local/lib/lxvst:~/.lxvst"
 export LADSPA_PATH="/usr/lib/ladspa"
 export LV2_PATH="/usr/lib/lv2:/usr/local/lib/lv2:~/.lv2"
 export DSSI_PATH="/usr/lib/dssi:/usr/local/lib/dssi:~/.dssi:"
-#pacmd set-default-sink alsa_output.pci-0000_00_1b.0.analog-stereo
 export JAVA_HOME="/home/thomas/jdk1.8.0_181"
 export PATH="/home/thomas/bin/toolchains/x86_64-linux-musl-cross/bin:~/.cabal/bin:$HOME/bin/:/usr/bin/core_perl/:/usr/local/bin:/home/thomas//.local/bin/:/home/thomas/.gem/ruby/2.5.0/bin:/home/thomas/.gem/ruby/2.6.0/bin:/home/thomas/eclipse_bin/photon/eclipse:$JAVA_HOME/bin:$PATH"
 export PROMPT_COMMAND='echo -ne "\033]2;$(PWD/#$(HOME)/\~)\007"'
 export MPD_HOST=/home/thomas/.config/mpd/socket
 export LD_LIBRARY_PATH="/usr/lib64/nvidia/xorg/:/usr/lib32/nvidia/xorg/:/usr/lib64/nvidia/:/usr/lib32/nvidia:/usr/lib:"
 export INPUTRC=/home/thomas/.inputrc
+export MPD_HOST=$HOME/.config/mpd/socket
 eval $(thefuck --alias)
 case "$TERM" in
     xterm*)
@@ -79,14 +69,44 @@ case "$TERM" in
         [ -n "$FBTERM" ] && export TERM=fbterm
         ;;
 esac
+# create a zkbd compatible hash;
+# to add other keys to this hash, see: man 5 terminfo
+typeset -g -A key
 
-export MPD_HOST=$HOME/.config/mpd/socket
-
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
-bindkey "${terminfo[khome]}" beginning-of-line
-bindkey "${terminfo[kend]}" end-of-line
-bindkey -e
+key[Home]="$terminfo[khome]"
+key[End]="$terminfo[kend]"
+key[Insert]="$terminfo[kich1]"
+key[Backspace]="$terminfo[kbs]"
+key[Delete]="$terminfo[kdch1]"
+key[Up]="$terminfo[kcuu1]"
+key[Down]="$terminfo[kcud1]"
+key[Left]="$terminfo[kcub1]"
+key[Right]="$terminfo[kcuf1]"
+key[PageUp]="$terminfo[kpp]"
+key[PageDown]="$terminfo[knp]"
+# setup key accordingly
+[[ -n "$key[Home]" ]]       && bindkey "$key[Home]"         beginning-of-line
+[[ -n "$key[End]" ]]        && bindkey "$key[End]"          end-of-line
+[[ -n "$key[Insert]" ]]     && bindkey "$key[Insert]"       overwrite-mode
+[[ -n "$key[Backspace]" ]]  && bindkey "$key[Backspace]"    backward-delete-char
+[[ -n "$key[Delete]" ]]     && bindkey "$key[Delete]"       delete-char
+[[ -n "$key[Up]" ]]         && bindkey "$key[Up]"           history-substring-search-up
+[[ -n "$key[Down]" ]]       && bindkey "$key[Down]"         history-substring-search-down
+[[ -n "$key[Left]" ]]       && bindkey "$key[Left]"         backward-char
+[[ -n "$key[Right]" ]]      && bindkey "$key[Right]"        forward-char
+# Finally, make sure the terminal is in application mode, when zle is
+# active. Only then are the values from $terminfo valid.
+if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
+    function zle-line-init () {
+        echoti smkx
+    }
+    function zle-line-finish () {
+        echoti rmkx
+    }
+    zle -N zle-line-init
+    zle -N zle-line-finish
+fi
+# bindkey -e
 echo '' > /tmp/album
 HISTFILE=/home/thomas/.zsh_history
 HISTSIZE=1000000
@@ -103,7 +123,6 @@ setopt HIST_SAVE_NO_DUPS
 setopt HIST_VERIFY
 setopt INC_APPEND_HISTORY
 setopt SHARE_HISTORY
-#setopt INC_APPEND_HISTORY_TIME
 setopt SHARE_HISTORY
 
 zstyle ':completion:*' completer _oldlist _expand _complete _match _ignored _approximate

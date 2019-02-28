@@ -1,5 +1,7 @@
-UXterm*vt100*faceName: Monaco for Powerline:pixelsize:13:antialias:true
+UXterm*vt100*faceName: MesloLGSDZ Nerd Font Mono:pixelsize:13:antialias:true
 UXterm*vt100*faceNameDoublesize: WenQuanYi Micro Hei Mono:pixelsize:13:antialias:true
+Xterm*vt100*faceName: MesloLGSDZ Nerd Font Mono:pixelsize:13:antialias:true
+Xterm*vt100*faceNameDoublesize: WenQuanYi Micro Hei Mono:pixelsize:13:antialias:true
 URxvt*font: xft:MesloLGSDZ Nerd Font Mono:size=9:minspace=true,xft:WenQuanYi Micro Hei Mono:size=9:minspace=true
 URxvt*urlLauncher:firefox
 URxvt*scrollBar:false
@@ -194,15 +196,74 @@ rofi.hide-scrollbar:                 true
 rofi.markup-rows:                    false
 rofi.scrollbar-width:                8
 
-st.alpha: 204
-st.shell: "/bin/zsh"
+! st.alpha: 204
+! st.shell: "/bin/zsh"
 ! st.font: "MesloLGMDZ Nerd Font:pixelsize=12:antialias=true:autohint=true"
-st.borderpx: 2
-st.xfps: 120
-st.actionfps: 30
-st.cwscale: 1.0
-st.chscale: 1.0
-st.blinktimeout: 800
-st.bellvolume: 0
-st.termname: "st-256color"
-st.tabspaces: 2
+! st.borderpx: 2
+! st.xfps: 300
+! st.actionfps: 30
+! st.cwscale: 1.0
+! st.chscale: 1.0
+! st.blinktimeout: 800
+! st.bellvolume: 0
+! st.termname: "st-256color"
+! st.tabspaces: 2
+! These are all possible options, presented with default values.
+! xst will fallback to *.option if st.option is not present.
+! see src/config.h for more information about option meanings.
+
+! These options only take effect on startup.
+st.termname:     st-256color
+! if you do not set shell, precedence is: -e arg, utmp option, SHELL env var, /etc/passwd shell
+st.shell:        /bin/zsh
+
+! The following options options can be reloaded via USR1 signal.
+st.font:              MesloLGMDZ Nerd Font:pixelsize=12:antialias=true:autohint=true;
+st.borderpx:          2
+! Available cursor values: 2 4 6 7 = █ _ | ☃ ( 1 3 5 are blinking versions)
+st.cursorshape:       2
+! thickness of underline and bar cursors
+st.cursorthickness:   2
+! 0: normal blinking, 1: leave cursor border and blink with cursor's background
+st.cursorblinkstyle:  0
+! 0: cursor blinks with a constant interval; 1: blinking cycle resets on key input
+st.cursorblinkontype: 1
+st.bold_font:         0
+st.xfps:              300
+st.actionfps:         30
+! Amount of lines scrolled
+st.mouseScrollLines:  1
+! Kerning / character bounding-box height multiplier
+st.chscale:           1.0
+! Kerning / character bounding-box width multiplier
+st.cwscale:           1.0
+! blinking timeout for terminal and cursor blinking (0 disables)
+st.blinktimeout:      800
+! bell volume. Value between -100 and 100. (0 disables)
+st.bellvolume:        100
+! this is a char that is exposed like so: `printf '\033[z'`
+! st.prompt_char:       $
+! This option is can be preedit style. Available values: `root` `overthespot` (Default taken `root`)
+st.imstyle:           root
+
+! opacity==255 means what terminal will be not transparent, 0 - fully transparent
+st.opacity:      204
+! Defaults taken from base16-twilight colorscheme.
+st.foreground:   #ffffff
+st.background:   #000000
+st.color0:       #1f1f1f
+st.color1:       #f81118
+st.color2:       #2dc55e
+st.color3:       #ecba0f
+st.color4:       #2a84d2
+st.color5:       #4e5ab7
+st.color6:       #1081d6
+st.color7:       #d6dbe5
+st.color8:       #d6dbe5
+st.color9:       #de352e
+st.color10:      #1dd361
+st.color11:      #f3bd09
+st.color12:      #1081d6
+st.color13:      #5350b9
+st.color14:      #0f7ddb
+st.color15:      #ffffff
