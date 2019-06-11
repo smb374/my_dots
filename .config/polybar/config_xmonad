@@ -21,7 +21,6 @@ width = 100%
 height = 20
 offset-x = 0
 offset-y = 0
-enable-ipc = true
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -148,7 +147,7 @@ ws-icon-8 = 9;
 ws-icon-9 = 10;
 [module/xmonad]
 type = custom/script
-exec = xmonad-log
+exec = socat unix-connect:/tmp/xmonad.sock stdio
 
 tail = true
 [module/xwindow]
@@ -373,7 +372,7 @@ format-prefix = "  "
 format-prefix-foreground = ${colors.foreground-alt}
 format-padding = 0
 format-background = ${colors.background}
-exec = echo "$(whoami)@$(uname -n) ~>"
+exec = echo "$(whoami)@$(uname -n) =<<  "
 
 [module/github]
 type = internal/github
@@ -396,7 +395,7 @@ type = custom/menu
 label-open = ""
 ; label-open-foreground = ${colors.alert}
 label-close = ""
-label-separator = " / "
+label-separator = " > "
 ; reboot
 menu-0-1 = ""
 menu-0-1-exec = systemctl reboot

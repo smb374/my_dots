@@ -1,8 +1,10 @@
 -- Based on https://idzardblog.wordpress.com/2017/09/17/xmonad-polybar
 import XMonad
+
 import XMonad.Actions.CycleWS
 import XMonad.Actions.DynamicProjects
 import XMonad.Actions.FloatKeys
+
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
@@ -11,11 +13,13 @@ import XMonad.Hooks.Minimize
 import XMonad.Hooks.Place
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.UrgencyHook
+
 import XMonad.Util.EZConfig
 import XMonad.Util.NamedActions
 import XMonad.Util.Run
 import XMonad.Util.SpawnOnce
 import XMonad.Util.Themes
+
 import XMonad.Layout.BinarySpacePartition
 import XMonad.Layout.FixedColumn
 import XMonad.Layout.LimitWindows
@@ -29,8 +33,12 @@ import XMonad.Layout.Spacing
 import XMonad.Layout.SimplestFloat
 import XMonad.Layout.Tabbed
 import XMonad.Layout.ThreeColumns
+
+import XMonad.Operations
+
 import XMonad.Prompt
 import XMonad.Prompt.Shell
+
 import qualified DBus as D
 import qualified DBus.Client as D
 import qualified XMonad.Layout.BoringWindows as B
@@ -39,27 +47,42 @@ import Graphics.X11.ExtraTypes.XF86
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 import Data.Ratio ((%))
-import System.IO (hClose)
+import System.IO
 import qualified Codec.Binary.UTF8.String as UTF8
 
 main :: IO ()
 
 main = do
-    dbus <- D.connectSession
-    D.requestName dbus (D.busName_ "org.xmonad.Log")
-        [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
+    xmproc <- spawnPipe "rm /tmp/xmonad.sock 2>/dev/null ; socat unix-listen:/tmp/xmonad.sock,fork,reuseaddr stdio"
     xmonad
         $ withUrgencyHook NoUrgencyHook
         $ ewmh
         $ addDescrKeys ((myModMask, xK_F1), xMessage) myAdditionalKeys
-        $ myConfig { logHook = dynamicLogWithPP (myLogHook dbus) }
+        $ myConfig  { logHook = dynamicLogWithPP $ xmobarPP
+                        { ppOutput = hPutStrLn xmproc
+                        , ppCurrent = wrap ("%{F" ++ myblue ++ "} ") " %{F-}"
+                        , ppVisible = wrap ("%{F" ++ blue ++ "} ") " %{F-}"
+                        , ppUrgent = wrap ("%{F" ++ red ++ "} ") " %{F-}"
+                        , ppHidden = wrap " " " "
+                        , ppHiddenNoWindows = wrap " " " "
+                        , ppWsSep = ""
+                        , ppSep = " > "
+                        , ppTitle = myAddSpaces 25
+                        }
+                    }
+-- Loghook
+-- polybar (use unix socket to send to polybar)
+
+myAddSpaces :: Int -> String -> String
+myAddSpaces len str = sstr ++ replicate (len - length sstr) ' '
+    where
+        sstr = shorten len str
 
 -- General config
 
-myBar          = "xmobar ~/.xmonad/xmobarrc"
 myTerminal     = "st"
 myModMask      = mod4Mask
-myBorderWidth  = 0
+myBorderWidth  = 1
 myBrowser      = "firefox"
 mySpacing :: Int
 mySpacing      = 0
@@ -90,6 +113,7 @@ pur2      = "#5b51c9"
 blue2     = "#2266d0"
 myred     = "#fe8d82"
 myblue    = "#99a7ec"
+mygrey    = "#333333"
 
 -- Font
 
@@ -101,15 +125,16 @@ myLayouts = renamed [CutWordsLeft 1] . avoidStruts . minimize . B.boringWindows 
 
 -- layout per workspace
 perWS = onWorkspace tag1 my3FT $
-        onWorkspace tag2 myFT  $
+        onWorkspace tag2 myBFTM$
         onWorkspace tag3 my3FT $
         onWorkspace tag4 my3FT $
-        onWorkspace tag5 myFT $
+        onWorkspace tag5 myFT  $
         onWorkspace tag6 myFT  myAll -- all layouts for all other workspaces
 
 
 myFT  = simplestFloat ||| myTile ||| myTab ||| myFull
 myFTM = myTile ||| myTab ||| myFull ||| myMagn ||| simplestFloat
+myBFTM= emptyBSP ||| myTile ||| myTab ||| myFull ||| myMagn ||| simplestFloat
 my3FT = myTile ||| myTab ||| myFull ||| my3cmi ||| simplestFloat
 myAll = myTile ||| myTab ||| myFull ||| my3cmi ||| myMagn ||| simplestFloat
 
@@ -136,7 +161,6 @@ myPromptTheme = def
     , bgHLight          = pur2
     , borderColor       = pur2
     , promptBorderWidth = 0
-    {- , height            = prompt -}
     , position          = Top
     }
 
@@ -205,8 +229,6 @@ myWindowManagerKeys =
     , ("M-C-l"        , addName "Expand"                                          $ sendMessage $ ExpandTowards R)
     , ("M-C-k"        , addName "Expand"                                          $ sendMessage $ ShrinkFrom D)
     , ("M-C-j"        , addName "Expand"                                          $ sendMessage $ ExpandTowards D)
-    , ("M-s"          , addName "Expand"                                          $ sendMessage Swap)
-    , ("M-M1-s"       , addName "Expand"                                          $ sendMessage Rotate)
     , ("M-S-l"        , addName "Float Resize"                                    $ withFocused(keysResizeWindow (10, 0) (0, 0)))
     , ("M-S-h"        , addName "Float Resize"                                    $ withFocused(keysResizeWindow (-10, 0) (0, 0)))
     , ("M-S-j"        , addName "Float Resize"                                    $ withFocused(keysResizeWindow (0, 10) (0, 0)))
@@ -215,6 +237,17 @@ myWindowManagerKeys =
     , ("M-C-<Right>"  , addName "Float Move"                                      $ withFocused(keysMoveWindow (10,0)))
     , ("M-C-<Up>"     , addName "Float Move"                                      $ withFocused(keysMoveWindow (0,-10)))
     , ("M-C-<Down>"   , addName "Float Move"                                      $ withFocused(keysMoveWindow (0,10)))
+    {- BSP -}
+    , ("M-M1-L"     , addName "BSP Expand L"  $ sendMessage $ ExpandTowards L)
+    , ("M-M1-H"     , addName "BSP Shrink L"  $ sendMessage $ ShrinkFrom L)
+    , ("M-M1-K"     , addName "BSP Expand U"  $ sendMessage $ ExpandTowards U)
+    , ("M-M1-J"     , addName "BSP Shrink U"  $ sendMessage $ ShrinkFrom U)
+    , ("M-M1-C-L"   , addName "BSP Expand R"  $ sendMessage $ ShrinkFrom R)
+    , ("M-M1-C-H"   , addName "BSP Shrink R"  $ sendMessage $ ExpandTowards R)
+    , ("M-M1-C-K"   , addName "BSP Expand D"  $ sendMessage $ ShrinkFrom D)
+    , ("M-M1-C-J"   , addName "BSP Shrink D"  $ sendMessage $ ExpandTowards D)
+    , ("M-M1-s"     , addName "BSP Swap"      $ sendMessage Swap)
+    , ("M-M1-r"     , addName "BSP Rotate"    $ sendMessage Rotate)
     ]
 
 myMediaKeys =
@@ -253,54 +286,12 @@ myManageHook = composeAll
 
 myManageHook' = composeOne [ isFullscreen -?> doFullFloat ]
 
--- Loghook
--- polybar (dbus message to xmonad-log)
-
-myLogHook :: D.Client -> PP
-myLogHook dbus = def
-    { ppOutput = dbusOutput dbus
-    , ppCurrent = wrap ("%{F" ++ myblue ++ "} ") " %{F-}"
-    , ppVisible = wrap ("%{F" ++ blue ++ "} ") " %{F-}"
-    , ppUrgent = wrap ("%{F" ++ red ++ "} ") " %{F-}"
-    , ppHidden = wrap " " " "
-    , ppHiddenNoWindows = wrap " " " "
-    , ppWsSep = ""
-    , ppSep = " > "
-    , ppTitle = myAddSpaces 25
-    }
-
--- Emit a DBus signal on log updates
-dbusOutput :: D.Client -> String -> IO ()
-dbusOutput dbus str = do
-    let signal = (D.signal objectPath interfaceName memberName) {
-            D.signalBody = [D.toVariant $ UTF8.decodeString str]
-        }
-    D.emit dbus signal
-    where
-        objectPath = D.objectPath_ "/org/xmonad/Log"
-        interfaceName = D.interfaceName_ "org.xmonad.Log"
-        memberName = D.memberName_ "Update"
-{- myLogHook h = dynamicLogWithPP $ wsPP { ppOutput = hPutStrLn h } -}
-{- wsPP = xmobarPP { -}
-{-     ppCurrent = xmobarColor blue2 "", -}
-{-     ppVisible = xmobarColor blue "", -}
-{-     ppUrgent = xmobarColor red "", -}
-{-     ppHidden = wrap " " " ", -}
-{-     ppWsSep = "", -}
-{-     ppSep = " | ", -}
-{-     ppTitle = myAddSpaces 25 -}
-{- } -}
-
-myAddSpaces :: Int -> String -> String
-myAddSpaces len str = sstr ++ replicate (len - length sstr) ' '
-    where
-        sstr = shorten len str
 
 -- StartupHook
 
 myStartupHook = do
     setWMName "XMonad 0.15"
-    spawn "$HOME/.config/polybar/launch_x.sh"
+    spawn     "$HOME/.config/polybar/launch_x.sh"
     spawnOnce "dunst &"
     spawnOnce "feh --bg-fill '/home/thomas/Pictures/Wallpapers/34871417_p0.jpg'"
     spawnOnce "compton &"
@@ -334,7 +325,7 @@ myConfig = def
     , clickJustFocuses    = False
     , borderWidth         = myBorderWidth
     , normalBorderColor   = bg
-    , focusedBorderColor  = pur2
+    , focusedBorderColor  = mygrey
     , workspaces          = myWorkspaces
     , modMask             = myModMask
     }

@@ -57,7 +57,8 @@ xrandr --auto
 # exec i3
 # exec dwm
 xsetroot -cursor_name left_ptr
-export MONITOR=$(polybar -m|tail -1|sed -e 's/:.*$//g') 
+export MONITOR=$(polybar -m|tail -1|sed -e 's/:.*$//g')
+xset m 0 0
 exec xmonad
 # dwm_startup
 # exec stumpwm.ros
