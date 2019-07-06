@@ -23,9 +23,9 @@
     startup_notification = false
     # https://github.com/knopwob/dunst/issues/26#issuecomment-36159395
     #icon_position = left
-    #icon_folders = /usr/share/icons/elementary/actions/16/
+    #icon_folders = /usr/share/icons/Pop/16x16/actions/
     frame_width = 1
-    frame_color = "#ebd1d0"
+    frame_color = "#eef1f6"
 
 [shortcuts]
     close = ctrl+space
@@ -34,16 +34,16 @@
     context = ctrl+shift+period
 
 [urgency_low]
-    background = "#ebd1d0"
-    foreground = "#961319"
+    background = "#eef1f6"
+    foreground = "#154196"
     timeout = 5
 
 [urgency_normal]
-    background = "#ebd1d0"
-    foreground = "#961319"
+    background = "#eef1f6"
+    foreground = "#154196"
     timeout = 20
 
 [urgency_critical]
-    background = "#ebd1d0"
-    foreground = "#961319"
+    background = "#eef1f6"
+    foreground = "#154196"
 timeout = 0

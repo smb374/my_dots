@@ -1,7 +1,7 @@
 [colors]
-background = #cce54438
-foreground = #ebd1d0
-foreground-alt = #ebd1d0
+background = #4b154196
+foreground = #eef1f6
+foreground-alt = #eef1f6
 background-alt = #cc961319
 alert = #bd2c40
 
@@ -47,7 +47,7 @@ font-5 = FontAwesome:pixelsize=14;2
 
 modules-left = powermenu hostname xmonad
 modules-center = 
-modules-right = cpu memory temperature backlights battery pulseaudio github date
+modules-right = cpu memory temperature backlights battery pulseaudio pkg date
 
 [bar/bottom]
 monitor = ${env:MONITOR:fallback-value}
@@ -59,7 +59,7 @@ height = 20
 offset-x = 0
 offset-y = 0
 
-background = ${colors.background}
+background = #00154196
 foreground = ${colors.foreground}
 
 overline-size = 0
@@ -394,7 +394,7 @@ interval = 10
 type = custom/menu
 label-open = ""
 ; label-open-foreground = ${colors.alert}
-label-close = ""
+label-close = "<<|"
 label-separator = " > "
 ; reboot
 menu-0-1 = ""

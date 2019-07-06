@@ -1,59 +1,61 @@
 # ~/.zshrc
-source <(antibody init)
-antibody bundle < ~/.zsh_plugins.txt
-source /etc/profile.d/plan9.sh
+# source <(antibody init)
+# antibody bundle < ~/.zsh_plugins.txt
 source ~/.profile
+source ~/.zsh_plugins.sh
+source /etc/profile.d/plan9.sh
 
-alias sudo='sudo '
-alias pacman='pacman --color auto'
-alias ls='ls --color=always'
-alias ll='ls -hal'
-alias grep='grep --color=auto'
-alias pfetch="gallery-dl -u foo@bar -p barz https://www.pixiv.net/bookmark.php"
-alias rs='screen -r'
-alias tnew='tmux new -s'
-alias tat='tmux a -t '
-alias emacs='emacs -nw'
-alias newmenu='mmaker -vf -t Xterm OpenBox3'
+alias ..='cd ..'
+alias anboxbr='sudo nmcli con add type bridge ifname anbox0 -- connection.id anbox-net ipv4.method shared ipv4.addresses 192.168.250.1/24'
 alias aria2rpc='aria2c --conf-path=/home/thomas/.aria2/config/aria2.conf -D'
 alias diskspeed='fio --name TEST --eta-newline=5s --filename=fio-tempfile.dat --rw=rw --size=500m --io_size=10g --blocksize=2048k --ioengine=libaio --fsync=10000 --iodepth=32 --numjobs=1 --runtime=60 --group_reporting'
+alias dmesg='dmesg --color=always | less'
+alias emacs='emacs -nw'
+alias fbterm='FBTERM=1 exec fcitx-fbterm-helper -l'
+alias fl2ogg='find . -name "*flac" -exec oggenc -q 10 -b 485 {} \; && find . -iname "*.flac" -delete'
+alias freeup='sudo zsh -c "echo 3 > /proc/sys/vm/drop_caches"'
+alias grep='grep --color=auto'
+alias g='wget -O cover.jpg '
+alias jwine='LC_ALL=ja_JP.UTF-8 wine '
+alias l='ls -lh'
+alias ll='ls -hal'
+alias ls='ls --color=always'
+alias miku='LC_ALL=ja_JP.UTF-8 WINEPREFIX=/home/thomas/.mikumiku WINEARCH=win32 wine /home/thomas/Downloads/MikuMikuDanceE_v931/MikuMikuDance.exe'
+alias newmenu='mmaker -vf -t Xterm OpenBox3'
+alias pacman='pacman --color auto'
+alias pfetch="gallery-dl -u supermariobros374@gmail.com -p thomas374 https://www.pixiv.net/bookmark.php"
 alias ptt='ssh bbsu@ptt.cc'
 alias rmbs='find -L . -name . -o -type d -prune -o -type l -exec rm {} +'
-alias fl2ogg='find . -name "*flac" -exec oggenc -q 10 -b 485 {} \; && find . -iname "*.flac" -exec rm {} +'
-alias anboxbr='sudo nmcli con add type bridge ifname anbox0 -- connection.id anbox-net ipv4.method shared ipv4.addresses 192.168.250.1/24'
-alias zsnap='sudo zfs snapshot zroot/ROOT/default@$(date +%Y%m%d%H%M) ; sudo zfs snapshot zroot/data/usr@$(date +%Y%m%d%H%M) ; sudo zfs snapshot zroot/data/home@$(date +%Y%m%d%H%M) ; sudo zfs snapshot zroot/data/opt@$(date +%Y%m%d%H%M)'
+alias rs='screen -r'
+alias sudo='sudo '
+alias tat='tmux a -t '
+alias termite='termite --class termite --name termite'
+alias tnew='tmux new -s'
+alias tnvim='nvim -u ~/.config/nvim/tty.vim'
+alias updategrub='sudo sh -c "ZPOOL_VDEV_NAME_PATH=1 grub-mkconfig -o /boot/grub/grub.cfg"'
 alias zlsnap='zfs list -t snapshot'
 alias zroll='sudo zfs rollback'
-alias tnvim='nvim -u ~/.config/nvim/tty.vim'
-alias fbterm='FBTERM=1 exec fcitx-fbterm-helper -l'
-alias freeup='sudo zsh -c "echo 3 > /proc/sys/vm/drop_caches"'
-alias updategrub='sudo sh -c "ZPOOL_VDEV_NAME_PATH=1 grub-mkconfig > /boot/grub/grub.cfg"'
-alias termite='termite --class termite --name termite'
-alias jwine='LC_ALL=ja_JP.UTF-8 wine '
-alias dmesg='dmesg --color=always | less'
+alias zsnap='sudo zfs snapshot zroot/ROOT/default@$(date +%Y%m%d%H%M) ; sudo zfs snapshot zroot/data/usr@$(date +%Y%m%d%H%M) ; sudo zfs snapshot zroot/data/home@$(date +%Y%m%d%H%M) ; sudo zfs snapshot zroot/data/opt@$(date +%Y%m%d%H%M)'
 
-export WINEPREFIX="/home/thomas/.local/share/wineprefixes/osu/"
-export VISUAL="nvim"
-export EDITOR="nvim"
-export theme_nerd_fonts=yes
-export theme_color_scheme="zenburn"
-export VBOX_USB="usbfs"
-export ANDROID_SDK_PATH=/home/thomas/android-sdk
 export ANDROID_NDK_PATH=/home/thomas/android-ndk-r16
-export LESSOPEN="| /usr/bin/source-highlight-esc.sh %s"
-export LESS='-R '
-export VST_PATH="/usr/lib/vst:/usr/local/lib/vst:~/.vst"
-export LXVST_PATH="/usr/lib/lxvst:/usr/local/lib/lxvst:~/.lxvst"
-export LADSPA_PATH="/usr/lib/ladspa"
-export LV2_PATH="/usr/lib/lv2:/usr/local/lib/lv2:~/.lv2"
+export ANDROID_SDK_PATH=/home/thomas/android-sdk
+export WINEPREFIX="/home/thomas/.local/share/wineprefixes/osu/"
 export DSSI_PATH="/usr/lib/dssi:/usr/local/lib/dssi:~/.dssi:"
-export JAVA_HOME="/home/thomas/jdk1.8.0_181"
-export PATH="/home/thomas/bin/toolchains/x86_64-linux-musl-cross/bin:~/.cabal/bin:$HOME/bin/:/usr/bin/core_perl/:/usr/local/bin:/home/thomas//.local/bin/:/home/thomas/.gem/ruby/2.5.0/bin:/home/thomas/.gem/ruby/2.6.0/bin:/home/thomas/eclipse_bin/photon/eclipse:$JAVA_HOME/bin:$PATH"
-export PROMPT_COMMAND='echo -ne "\033]2;$(PWD/#$(HOME)/\~)\007"'
-export MPD_HOST=/home/thomas/.config/mpd/socket
-export LD_LIBRARY_PATH="/usr/lib64/nvidia/xorg/:/usr/lib32/nvidia/xorg/:/usr/lib64/nvidia/:/usr/lib32/nvidia:/usr/lib:"
+export EDITOR="vim"
 export INPUTRC=/home/thomas/.inputrc
-export MPD_HOST=$HOME/.config/mpd/socket
+export JAVA_HOME="/home/thomas/jdk1.8.0_181"
+export LADSPA_PATH="/usr/lib/ladspa"
+export LD_LIBRARY_PATH="/usr/lib64/nvidia/xorg/:/usr/lib32/nvidia/xorg/:/usr/lib64/nvidia/:/usr/lib32/nvidia:/usr/lib:"
+export LESS='-R '
+export LESSOPEN="| /usr/bin/source-highlight-esc.sh %s"
+export LV2_PATH="/usr/lib/lv2:/usr/local/lib/lv2:~/.lv2"
+export LXVST_PATH="/usr/lib/lxvst:/usr/local/lib/lxvst:~/.lxvst"
+export MPD_HOST=/home/thomas/.config/mpd/socket
+export PROMPT_COMMAND='echo -ne "\033]2;$(PWD/#$(HOME)/\~)\007"'
+export PATH="$PATH:/home/thomas/.cabal/bin:/home/thomas/.vim/bin/:~/.cabal/bin:$HOME/bin/:/usr/bin/core_perl/:/usr/local/bin:/home/thomas//.local/bin/:/home/thomas/.gem/ruby/2.5.0/bin:/home/thomas/.gem/ruby/2.6.0/bin:/home/thomas/eclipse_bin/photon/eclipse:$JAVA_HOME/bin"
+export VBOX_USB="usbfs"
+export VISUAL="vim"
+export VST_PATH="/usr/lib/vst:/usr/local/lib/vst:~/.vst"
 eval $(thefuck --alias)
 case "$TERM" in
     xterm*)
@@ -150,6 +152,8 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 zstyle ':completion:*:kill:*' force-list always
 zstyle ':completion:*:processes' command 'ps -au$USER'
 
-autoload -U compinit
+autoload -Uz compinit
 autoload -U complist
 [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]] && compinit || compinit -C
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

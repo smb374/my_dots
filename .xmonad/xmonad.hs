@@ -29,8 +29,8 @@ import XMonad.Layout.NoBorders
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.Renamed
 import XMonad.Layout.ResizableTile
-import XMonad.Layout.Spacing
 import XMonad.Layout.SimplestFloat
+import XMonad.Layout.Spacing
 import XMonad.Layout.Tabbed
 import XMonad.Layout.ThreeColumns
 
@@ -39,21 +39,20 @@ import XMonad.Operations
 import XMonad.Prompt
 import XMonad.Prompt.Shell
 
-import qualified DBus as D
-import qualified DBus.Client as D
-import qualified XMonad.Layout.BoringWindows as B
-import System.Exit
-import Graphics.X11.ExtraTypes.XF86
-import qualified XMonad.StackSet as W
-import qualified Data.Map        as M
 import Data.Ratio ((%))
+import Graphics.X11.ExtraTypes.XF86
+import System.Exit
 import System.IO
+
 import qualified Codec.Binary.UTF8.String as UTF8
+import qualified Data.Map        as M
+import qualified XMonad.Layout.BoringWindows as B
+import qualified XMonad.StackSet as W
 
 main :: IO ()
 
 main = do
-    xmproc <- spawnPipe "rm /tmp/xmonad.sock 2>/dev/null ; socat unix-listen:/tmp/xmonad.sock,fork,reuseaddr stdio"
+    xmproc <- spawnPipe "rm -rf /tmp/xmonad.sock 2>/dev/null ; socat unix-listen:/tmp/xmonad.sock,fork,reuseaddr stdio"
     xmonad
         $ withUrgencyHook NoUrgencyHook
         $ ewmh
@@ -80,40 +79,42 @@ myAddSpaces len str = sstr ++ replicate (len - length sstr) ' '
 
 -- General config
 
-myTerminal     = "st"
-myModMask      = mod4Mask
-myBorderWidth  = 1
-myBrowser      = "firefox"
+myTerminal      = "st"
+myModMask       = mod4Mask
+myBorderWidth   = 1
+myBrowser       = "firefox"
 mySpacing :: Int
-mySpacing      = 0
+mySpacing       = 0
 myLargeSpacing :: Int
-myLargeSpacing = 30
+myLargeSpacing  = 30
 noSpacing :: Int
-noSpacing      = 0
-prompt         = 20
-fg        = "#ebdbb2"
-bg        = "#282828"
-gray      = "#a89984"
-bg1       = "#3c3836"
-bg2       = "#505050"
-bg3       = "#665c54"
-bg4       = "#7c6f64"
+noSpacing       = 0
+prompt          = 20
+fg              = "#ebdbb2"
+bg              = "#282828"
+gray            = "#a89984"
+bg1             = "#3c3836"
+bg2             = "#505050"
+bg3             = "#665c54"
+bg4             = "#7c6f64"
 
-green     = "#b8bb26"
-darkgreen = "#98971a"
-red       = "#fb4934"
-darkred   = "#cc241d"
-yellow    = "#fabd2f"
-blue      = "#83a598"
-purple    = "#d3869b"
-aqua      = "#8ec07c"
-white     = "#eeeeee"
+green           = "#b8bb26"
+darkgreen       = "#98971a"
+red             = "#fb4934"
+darkred         = "#cc241d"
+yellow          = "#fabd2f"
+blue            = "#83a598"
+purple          = "#d3869b"
+aqua            = "#8ec07c"
+white           = "#eeeeee"
 
-pur2      = "#5b51c9"
-blue2     = "#2266d0"
-myred     = "#fe8d82"
-myblue    = "#99a7ec"
-mygrey    = "#333333"
+pur2            = "#5b51c9"
+blue2           = "#2266d0"
+blue3           = "#154196"
+white2          = "#eef1f6"
+myred           = "#fe8d82"
+myblue          = "#99a7ec"
+mygrey          = "#333333"
 
 -- Font
 
@@ -132,21 +133,21 @@ perWS = onWorkspace tag1 my3FT $
         onWorkspace tag6 myFT  myAll -- all layouts for all other workspaces
 
 
-myFT  = simplestFloat ||| myTile ||| myTab ||| myFull
-myFTM = myTile ||| myTab ||| myFull ||| myMagn ||| simplestFloat
-myBFTM= emptyBSP ||| myTile ||| myTab ||| myFull ||| myMagn ||| simplestFloat
-my3FT = myTile ||| myTab ||| myFull ||| my3cmi ||| simplestFloat
-myAll = myTile ||| myTab ||| myFull ||| my3cmi ||| myMagn ||| simplestFloat
+myFT  = simplestFloat   ||| myTile  ||| myTab   ||| myFull
+myFTM = myTile          ||| myTab   ||| myFull  ||| myMagn  ||| simplestFloat
+myBFTM= emptyBSP        ||| myTile  ||| myTab   ||| myFull  ||| myMagn  ||| simplestFloat
+my3FT = myTile          ||| myTab   ||| myFull  ||| my3cmi  ||| simplestFloat
+myAll = myTile          ||| myTab   ||| myFull  ||| my3cmi  ||| myMagn  ||| simplestFloat
 
-myFull = renamed [Replace "Full"] $ spacing 0 $ noBorders Full
-myTile = renamed [Replace "Main"] $ spacing mySpacing $ ResizableTall 1 (3/100) (1/2) []
-my3cmi = renamed [Replace "3Col"] $ spacing mySpacing $ ThreeColMid 1 (3/100) (1/2)
-myMagn = renamed [Replace "Mag"]  $ noBorders $ limitWindows 3 $ magnifiercz' 1.4 $ FixedColumn 1 20 80 10
+myFull = renamed [Replace "Full"]   $ spacing 0         $ noBorders Full
+myTile = renamed [Replace "Main"]   $ spacing mySpacing $ ResizableTall 1 (3/100) (1/2) []
+my3cmi = renamed [Replace "3Col"]   $ spacing mySpacing $ ThreeColMid 1 (3/100) (1/2)
+myMagn = renamed [Replace "Mag"]    $ noBorders $ limitWindows 3 $ magnifiercz' 1.4 $ FixedColumn 1 20 80 10
 myTab  = renamed [Replace "Tabbed"] $ spacing mySpacing $  tabbed shrinkText def{ fontName = "xft:WenQuanYi Micro Hei:pixelsize=10"
-                                                                                , inactiveColor = "#e54438"
-                                                                                , activeColor = "#961319"
-                                                                                , activeBorderColor = "#961319"
-                                                                                , inactiveBorderColor = "#e54438"
+                                                                                , inactiveColor = white2
+                                                                                , activeColor = blue3
+                                                                                , activeBorderColor = blue3
+                                                                                , inactiveBorderColor = white2
                                                                                 , activeTextColor = myblue
                                                                                 }
 
@@ -293,7 +294,7 @@ myStartupHook = do
     setWMName "XMonad 0.15"
     spawn     "$HOME/.config/polybar/launch_x.sh"
     spawnOnce "dunst &"
-    spawnOnce "feh --bg-fill '/home/thomas/Pictures/Wallpapers/34871417_p0.jpg'"
+    spawnOnce "feh --bg-fill '/home/thomas/Pictures/Wallpapers/berserker_in_the_moonlight_by_fazal_sama_d95sn3c.jpg'"
     spawnOnce "compton &"
     spawnOnce "nm-applet &"
     spawnOnce "aria2c --conf-path=/home/thomas/.config/aria2/aria2.conf &"
@@ -313,13 +314,13 @@ myConfig = def
     { terminal            = myTerminal
     , layoutHook          = myLayouts
     , manageHook          = placeHook(smart(0.5, 0.5))
-        <+> manageDocks
-        <+> myManageHook
-        <+> myManageHook'
-        <+> manageHook def
+                            <+> manageDocks
+                            <+> myManageHook
+                            <+> myManageHook'
+                            <+> manageHook def
     , handleEventHook     = docksEventHook
-        <+> minimizeEventHook
-        <+> fullscreenEventHook
+                            <+> minimizeEventHook
+                            <+> fullscreenEventHook
     , startupHook         = myStartupHook
     , focusFollowsMouse   = True
     , clickJustFocuses    = False

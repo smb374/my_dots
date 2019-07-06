@@ -26,13 +26,13 @@ if [ -f "$usermodmap" ]; then
 fi
 
 # start some nice programs
-
-if [ -d /etc/X11/xinit/xinitrc.d ] ; then
- for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
-  [ -x "$f" ] && . "$f"
- done
- unset f
-fi
+#
+# if [ -d /etc/X11/xinit/xinitrc.d ] ; then
+#  for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
+#   [ -x "$f" ] && . "$f"
+#  done
+#  unset f
+# fi
 dwm_startup () {
     dunst &
     feh --bg-fill '/home/thomas/Pictures/Wallpapers/34871417_p0.jpg' &
@@ -59,6 +59,8 @@ xrandr --auto
 xsetroot -cursor_name left_ptr
 export MONITOR=$(polybar -m|tail -1|sed -e 's/:.*$//g')
 xset m 0 0
+# exec $HOME/.xmonad/xmonad-x86_64-linux
+systemctl --user restart mpd 2>/dev/null
 exec xmonad
 # dwm_startup
 # exec stumpwm.ros

@@ -8,4 +8,4 @@ my($sum,$body)=(shift@mpc,join"\n",@mpc);
 my$bus=Net::DBus->find;
 my$notify_service=$bus->get_service("org.freedesktop.Notifications");
 my$notify_target=$notify_service->get_object("/org/freedesktop/Notifications","org.freedesktop.Notifications");
-$notify_target->Notify("ncmpcpp",345564,"",$sum,$body,[],{},5000);
+$notify_target->Notify("ncmpcpp",345564,"",$sum,$body,[],{},3000);

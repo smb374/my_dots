@@ -5,7 +5,7 @@ Xterm*vt100*faceNameDoublesize: WenQuanYi Micro Hei Mono:pixelsize:13:antialias:
 URxvt*font: xft:MesloLGSDZ Nerd Font Mono:size=9:minspace=true,xft:WenQuanYi Micro Hei Mono:size=9:minspace=true
 URxvt*urlLauncher:firefox
 URxvt*scrollBar:false
-URxvt*perl-ext-common: default,matcher
+URxvt*perl-ext-common: default,matcher,tabbed
 URxvt*url-launcher: /usr/bin/firefox
 URxvt*matcher*button: 1
 URxvt*termName: xterm-256color
@@ -196,18 +196,6 @@ rofi.hide-scrollbar:                 true
 rofi.markup-rows:                    false
 rofi.scrollbar-width:                8
 
-! st.alpha: 204
-! st.shell: "/bin/zsh"
-! st.font: "MesloLGMDZ Nerd Font:pixelsize=12:antialias=true:autohint=true"
-! st.borderpx: 2
-! st.xfps: 300
-! st.actionfps: 30
-! st.cwscale: 1.0
-! st.chscale: 1.0
-! st.blinktimeout: 800
-! st.bellvolume: 0
-! st.termname: "st-256color"
-! st.tabspaces: 2
 ! These are all possible options, presented with default values.
 ! xst will fallback to *.option if st.option is not present.
 ! see src/config.h for more information about option meanings.

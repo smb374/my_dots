@@ -1,8 +1,10 @@
 # Folder hooks
-folder-hook '<hookname>' 'source ~/.mutt/<hookfile>'
+folder-hook 'account.com.gmail.supermariobros374' 'source ~/.mutt/account.com.gmail.supermariobros374'
+folder-hook 'account.com.gmail.snlk374' 'source ~/.mutt/account.com.gmail.snlk374'
+folder-hook 'account.tw.edu.ntnu.hs.mail.supermariobros374' 'source ~/.mutt/account.tw.edu.ntnu.hs.mail.supermariobros374'
 
 # Default account
-source ~/.mutt/<hook>
+source ~/.mutt/account.com.gmail.supermariobros374
 
 # Macros for switching accounts
 macro index <f1> '<sync-mailbox><refresh><enter-command>source ~/.mutt/account.com.gmail.supermariobros374<enter><change-folder>!<enter>'
