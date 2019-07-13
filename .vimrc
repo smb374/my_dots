@@ -256,7 +256,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'roxma/nvim-yarp'
     Plug 'roxma/vim-hug-neovim-rpc'
     Plug 'Shougo/neco-syntax'
-    Plug 'PotatoesMaster/i3-vim-syntax'
+    Plug 'PotatoesMaster/i3-vim-syntax', { 'for': 'i3' }
     Plug 'dag/vim-fish'
     Plug 'vim-ruby/vim-ruby'
     Plug 'majutsushi/tagbar'
@@ -268,18 +268,18 @@ call plug#begin('~/.vim/plugged')
     Plug 'c9s/perlomni.vim'
     Plug 'kovisoft/slimv'
     Plug 'roxma/vim-tmux-clipboard'
-    Plug 'vim-scripts/excel.vim'
     Plug 'mfulz/cscope.nvim'
     Plug 'wesleyche/Trinity'
     Plug 'lervag/vimtex', { 'for': 'tex' }
     Plug 'neovimhaskell/haskell-vim'
-    " Plug 'eagletmt/neco-ghc'
     Plug 'alx741/vim-hindent'
     Plug 'ervandew/supertab'
     Plug 'autozimu/LanguageClient-neovim', {
         \ 'branch': 'next',
         \ 'do': './install.sh'
         \ }
+    Plug 'LnL7/vim-nix'
+    Plug 'aiya000/vim-ghcid-quickfix'
 call plug#end()
 nmap <Leader>pi :PlugInstall<CR>
 " Plugin Settings
@@ -501,7 +501,7 @@ let g:ale_linters = {
 \   'c': ['cppcheck'],
 \   'cpp': ['cppcheck'],
 \   'fish': ['fish'],
-\   'haskell': ['hlint','ghc']
+\   'haskell': ['hdevtools','ghc','hlint']
 \}
 let g:ale_lint_on_insert_leave = 1
 let g:ale_lint_on_enter = 1
@@ -524,6 +524,9 @@ let g:ale_python_flake8_options = '-m flake8'
 let g:ale_haskell_ghc_options = '-fno-code -v0 -isrc'
 "" deoplete
 let g:deoplete#enable_at_startup = 1
+" call deoplete#custom#option('sources', {
+"     \ '_': ['ale'],
+"     \})
 "" Tagbar
 let g:tagbar_width=35
 let g:tagbar_autofocus=1
@@ -632,7 +635,6 @@ let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
 let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
 let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
 let g:haskell_backpack = 1                " to enable highlighting of backpack keywords"
-let g:haskellmode_completion_ghc = 0
 "" vim-hindent
 let g:hindent_on_save = 0
 let g:hindent_indent_size = 8
@@ -657,3 +659,5 @@ map <Leader>lf :call LanguageClient#textDocument_formatting()<CR>
 map <Leader>lb :call LanguageClient#textDocument_references()<CR>
 map <Leader>la :call LanguageClient#textDocument_codeAction()<CR>
 map <Leader>ls :call LanguageClient#textDocument_documentSymbol()<CR>
+"" vim-ghcid-quickfix
+let g:ghcid_quickfix_showing = 'popup_always'

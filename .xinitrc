@@ -61,7 +61,7 @@ export MONITOR=$(polybar -m|tail -1|sed -e 's/:.*$//g')
 xset m 0 0
 # exec $HOME/.xmonad/xmonad-x86_64-linux
 systemctl --user restart mpd 2>/dev/null
-exec xmonad
+exec ~/.local/bin/xmonad
 # dwm_startup
 # exec stumpwm.ros
 # exec spectrwm

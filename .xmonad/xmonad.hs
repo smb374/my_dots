@@ -52,30 +52,32 @@ import qualified XMonad.StackSet as W
 main :: IO ()
 
 main = do
-    xmproc <- spawnPipe "rm -rf /tmp/xmonad.sock 2>/dev/null ; socat unix-listen:/tmp/xmonad.sock,fork,reuseaddr stdio"
-    xmonad
-        $ withUrgencyHook NoUrgencyHook
-        $ ewmh
-        $ addDescrKeys ((myModMask, xK_F1), xMessage) myAdditionalKeys
-        $ myConfig  { logHook = dynamicLogWithPP $ xmobarPP
-                        { ppOutput = hPutStrLn xmproc
-                        , ppCurrent = wrap ("%{F" ++ myblue ++ "} ") " %{F-}"
-                        , ppVisible = wrap ("%{F" ++ blue ++ "} ") " %{F-}"
-                        , ppUrgent = wrap ("%{F" ++ red ++ "} ") " %{F-}"
-                        , ppHidden = wrap " " " "
-                        , ppHiddenNoWindows = wrap " " " "
-                        , ppWsSep = ""
-                        , ppSep = " > "
-                        , ppTitle = myAddSpaces 25
-                        }
-                    }
+  xmproc <-
+    spawnPipe
+      "rm -rf /tmp/xmonad.sock 2>/dev/null ; socat unix-listen:/tmp/xmonad.sock,fork,reuseaddr stdio"
+  xmonad
+    $ withUrgencyHook NoUrgencyHook
+    $ ewmh
+    $ addDescrKeys ((myModMask, xK_F1), xMessage) myAdditionalKeys
+    $ myConfig
+        { logHook = dynamicLogWithPP $ xmobarPP
+                      { ppOutput          = hPutStrLn xmproc
+                      , ppCurrent = wrap ("%{F" ++ myblue ++ "} ") " %{F-}"
+                      , ppVisible = wrap ("%{F" ++ blue ++ "} ") " %{F-}"
+                      , ppUrgent          = wrap ("%{F" ++ red ++ "} ") " %{F-}"
+                      , ppHidden          = wrap " " " "
+                      , ppHiddenNoWindows = wrap " " " "
+                      , ppWsSep           = ""
+                      , ppSep             = " > "
+                      , ppTitle           = myAddSpaces 25
+                      }
+        }
 -- Loghook
 -- polybar (use unix socket to send to polybar)
 
 myAddSpaces :: Int -> String -> String
 myAddSpaces len str = sstr ++ replicate (len - length sstr) ' '
-    where
-        sstr = shorten len str
+  where sstr = shorten len str
 
 -- General config
 
@@ -122,34 +124,44 @@ myFont = "xft:NotoSansMono Nerd Font Mono:" ++ "fontformat=truetype:size=10:anti
 
 -- Layouts
 
-myLayouts = renamed [CutWordsLeft 1] . avoidStruts . minimize . B.boringWindows $ perWS
+myLayouts =
+  renamed [CutWordsLeft 1] . avoidStruts . minimize . B.boringWindows $ perWS
 
 -- layout per workspace
-perWS = onWorkspace tag1 my3FT $
-        onWorkspace tag2 myBFTM$
-        onWorkspace tag3 my3FT $
-        onWorkspace tag4 my3FT $
-        onWorkspace tag5 myFT  $
-        onWorkspace tag6 myFT  myAll -- all layouts for all other workspaces
+perWS =
+  onWorkspace tag1 my3FT
+    $ onWorkspace tag2 myBFTM
+    $ onWorkspace tag3 my3FT
+    $ onWorkspace tag4 my3FT
+    $ onWorkspace tag5 myFT
+    $ onWorkspace tag6 myFT myAll -- all layouts for all other workspaces
 
 
-myFT  = simplestFloat   ||| myTile  ||| myTab   ||| myFull
-myFTM = myTile          ||| myTab   ||| myFull  ||| myMagn  ||| simplestFloat
-myBFTM= emptyBSP        ||| myTile  ||| myTab   ||| myFull  ||| myMagn  ||| simplestFloat
-my3FT = myTile          ||| myTab   ||| myFull  ||| my3cmi  ||| simplestFloat
-myAll = myTile          ||| myTab   ||| myFull  ||| my3cmi  ||| myMagn  ||| simplestFloat
+myFT = simplestFloat ||| myTile ||| myTab ||| myFull
+myFTM = myTile ||| myTab ||| myFull ||| myMagn ||| simplestFloat
+myBFTM = emptyBSP ||| myTile ||| myTab ||| myFull ||| myMagn ||| simplestFloat
+my3FT = myTile ||| myTab ||| myFull ||| my3cmi ||| simplestFloat
+myAll = myTile ||| myTab ||| myFull ||| my3cmi ||| myMagn ||| simplestFloat
 
-myFull = renamed [Replace "Full"]   $ spacing 0         $ noBorders Full
+myFull = renamed [Replace "Full"] $ spacing 0 $ noBorders Full
 myTile = renamed [Replace "Main"]   $ spacing mySpacing $ ResizableTall 1 (3/100) (1/2) []
-my3cmi = renamed [Replace "3Col"]   $ spacing mySpacing $ ThreeColMid 1 (3/100) (1/2)
-myMagn = renamed [Replace "Mag"]    $ noBorders $ limitWindows 3 $ magnifiercz' 1.4 $ FixedColumn 1 20 80 10
-myTab  = renamed [Replace "Tabbed"] $ spacing mySpacing $  tabbed shrinkText def{ fontName = "xft:WenQuanYi Micro Hei:pixelsize=10"
-                                                                                , inactiveColor = white2
-                                                                                , activeColor = blue3
-                                                                                , activeBorderColor = blue3
-                                                                                , inactiveBorderColor = white2
-                                                                                , activeTextColor = myblue
-                                                                                }
+my3cmi =
+  renamed [Replace "3Col"] $ spacing mySpacing $ ThreeColMid 1 (3 / 100) (1 / 2)
+myMagn =
+  renamed [Replace "Mag"]
+    $ noBorders
+    $ limitWindows 3
+    $ magnifiercz' 1.4
+    $ FixedColumn 1 20 80 10
+myTab = renamed [Replace "Tabbed"] $ spacing mySpacing $ tabbed
+  shrinkText
+  def { fontName            = "xft:WenQuanYi Micro Hei:pixelsize=10"
+      , inactiveColor       = white2
+      , activeColor         = blue3
+      , activeBorderColor   = blue3
+      , inactiveBorderColor = white2
+      , activeTextColor     = myblue
+      }
 
 -- Themes
 -- Prompt themes

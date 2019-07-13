@@ -22,8 +22,8 @@
     separator_color = "#585858"
     startup_notification = false
     # https://github.com/knopwob/dunst/issues/26#issuecomment-36159395
-    #icon_position = left
-    #icon_folders = /usr/share/icons/Pop/16x16/actions/
+    icon_position = left
+    icon_folders = /usr/share/icons/Pop/16x16/actions/
     frame_width = 1
     frame_color = "#eef1f6"
 

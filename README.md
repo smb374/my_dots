@@ -3,15 +3,11 @@ Current desktop : XMonad 0.15, with polybar and conky.
 
 ======================================================
 
-Screenshots:
+Screenshot:
 
-![Imgur](https://i.imgur.com/OfFAfrP.png)
+![Imgur](https://i.imgur.com/GOLM9qO.png)
 
-![Imgur](https://i.imgur.com/NfloBxo.png)
-
-![Imgur](https://i.imgur.com/cfGQrHv.png)
-
-**Wallpaper**: [銀髪の博麗霊夢 | Rain Lan #pixiv](https://www.pixiv.net/member_illust.php?illust_id=34871417&mode=medium)<br/>
+**Wallpaper**: [Berserker in the Moonlight #deviantart](https://www.deviantart.com/fazal-sama/art/Berserker-in-the-Moonlight-553929960)<br/>
 **WM**: XMonad 0.15<br/>
 **Terminal**: st (Simple Terminal)<br/>
 **Font**: NotoSansMono Nerd Font/Meslo LGMDZ Nerd Font Mono<br/>

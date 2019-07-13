@@ -4,6 +4,7 @@
 source ~/.profile
 source ~/.zsh_plugins.sh
 source /etc/profile.d/plan9.sh
+source /home/thomas/.ghcup/env
 
 alias ..='cd ..'
 alias anboxbr='sudo nmcli con add type bridge ifname anbox0 -- connection.id anbox-net ipv4.method shared ipv4.addresses 192.168.250.1/24'
@@ -14,8 +15,10 @@ alias emacs='emacs -nw'
 alias fbterm='FBTERM=1 exec fcitx-fbterm-helper -l'
 alias fl2ogg='find . -name "*flac" -exec oggenc -q 10 -b 485 {} \; && find . -iname "*.flac" -delete'
 alias freeup='sudo zsh -c "echo 3 > /proc/sys/vm/drop_caches"'
-alias grep='grep --color=auto'
 alias g='wget -O cover.jpg '
+alias ghc='stack exec -- ghc '
+alias ghci='stack exec -- ghci '
+alias grep='grep --color=auto'
 alias jwine='LC_ALL=ja_JP.UTF-8 wine '
 alias l='ls -lh'
 alias ll='ls -hal'
@@ -52,25 +55,11 @@ export LV2_PATH="/usr/lib/lv2:/usr/local/lib/lv2:~/.lv2"
 export LXVST_PATH="/usr/lib/lxvst:/usr/local/lib/lxvst:~/.lxvst"
 export MPD_HOST=/home/thomas/.config/mpd/socket
 export PROMPT_COMMAND='echo -ne "\033]2;$(PWD/#$(HOME)/\~)\007"'
-export PATH="$PATH:/home/thomas/.cabal/bin:/home/thomas/.vim/bin/:~/.cabal/bin:$HOME/bin/:/usr/bin/core_perl/:/usr/local/bin:/home/thomas//.local/bin/:/home/thomas/.gem/ruby/2.5.0/bin:/home/thomas/.gem/ruby/2.6.0/bin:/home/thomas/eclipse_bin/photon/eclipse:$JAVA_HOME/bin"
+export PATH="/home/thomas/.local/bin:$PATH:$HOME/bin/:/usr/bin/core_perl/:/usr/local/bin:/home/thomas/.vim/bin/:/home/thomas/.gem/ruby/2.5.0/bin:/home/thomas/.gem/ruby/2.6.0/bin:/home/thomas/eclipse_bin/photon/eclipse:$JAVA_HOME/bin"
 export VBOX_USB="usbfs"
 export VISUAL="vim"
 export VST_PATH="/usr/lib/vst:/usr/local/lib/vst:~/.vst"
 eval $(thefuck --alias)
-case "$TERM" in
-    xterm*)
-        if [ -e /usr/share/terminfo/x/xterm-256color ]; then
-            export TERM=xterm-256color
-        elif [ -e /usr/share/terminfo/x/xterm-color ]; then
-            export TERM=xterm-color;
-        else
-            export TERM=xterm
-        fi
-        ;;
-    linux)
-        [ -n "$FBTERM" ] && export TERM=fbterm
-        ;;
-esac
 # create a zkbd compatible hash;
 # to add other keys to this hash, see: man 5 terminfo
 typeset -g -A key
