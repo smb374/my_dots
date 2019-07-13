@@ -5,7 +5,7 @@ Current desktop : XMonad 0.15, with polybar and conky.
 
 Screenshot:
 
-![Imgur](https://i.imgur.com/GOLM9qO.png)
+![Imgur](https://i.imgur.com/ig6vdLi.png)
 
 **Wallpaper**: [Berserker in the Moonlight #deviantart](https://www.deviantart.com/fazal-sama/art/Berserker-in-the-Moonlight-553929960)<br/>
 **WM**: XMonad 0.15<br/>
