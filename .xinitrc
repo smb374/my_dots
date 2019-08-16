@@ -50,6 +50,19 @@ dwm_startup () {
     slstatus &
     ~/dwm/dwm 2> ~/.dwm.log
 }
+spectrwm_startup () {
+    dunst &
+    feh --bg-fill '/home/thomas/Pictures/Wallpapers/berserker_in_the_moonlight_by_fazal_sama_d95sn3c.jpg'
+    conky -c ~/.i3.conkyrc -dq
+    bash -c "$HOME/.config/polybar/launch_s.sh"
+    compton &
+    aria2c --conf-path=/home/thomas/.config/aria2/aria2.conf &
+    fcitx &
+    clipit &
+    xss-lock -- betterlockscreen -l dim &
+    lxpolkit &
+    exec spectrwm
+}
 #xrandr --setprovideroutputsource modesetting NVIDIA-0
 xrdb ~/.Xresources
 xrandr --auto
@@ -60,9 +73,10 @@ xsetroot -cursor_name left_ptr
 export MONITOR=$(polybar -m|tail -1|sed -e 's/:.*$//g')
 xset m 0 0
 # exec $HOME/.xmonad/xmonad-x86_64-linux
-systemctl --user restart mpd 2>/dev/null
+# systemctl --user restart mpd 2>/dev/null
 exec ~/.local/bin/xmonad
+# exec i3
 # dwm_startup
 # exec stumpwm.ros
-# exec spectrwm
+# spectrwm_startup
 # exec awesome

@@ -1,8 +1,8 @@
+{-# OPTIONS_GHC -fno-warn-type-defaults #-}
 -- Based on https://idzardblog.wordpress.com/2017/09/17/xmonad-polybar
 import XMonad
 
 import XMonad.Actions.CycleWS
-import XMonad.Actions.DynamicProjects
 import XMonad.Actions.FloatKeys
 
 import XMonad.Hooks.DynamicLog
@@ -18,7 +18,6 @@ import XMonad.Util.EZConfig
 import XMonad.Util.NamedActions
 import XMonad.Util.Run
 import XMonad.Util.SpawnOnce
-import XMonad.Util.Themes
 
 import XMonad.Layout.BinarySpacePartition
 import XMonad.Layout.FixedColumn
@@ -34,20 +33,12 @@ import XMonad.Layout.Spacing
 import XMonad.Layout.Tabbed
 import XMonad.Layout.ThreeColumns
 
-import XMonad.Operations
 
 import XMonad.Prompt
-import XMonad.Prompt.Shell
 
-import Data.Ratio ((%))
-import Graphics.X11.ExtraTypes.XF86
-import System.Exit
 import System.IO
 
-import qualified Codec.Binary.UTF8.String as UTF8
-import qualified Data.Map        as M
 import qualified XMonad.Layout.BoringWindows as B
-import qualified XMonad.StackSet as W
 
 main :: IO ()
 
@@ -81,45 +72,74 @@ myAddSpaces len str = sstr ++ replicate (len - length sstr) ' '
 
 -- General config
 
-myTerminal      = "st"
-myModMask       = mod4Mask
-myBorderWidth   = 1
-myBrowser       = "firefox"
+myTerminal :: [Char]
+myTerminal = "st"
+myModMask :: KeyMask
+myModMask = mod4Mask
+myBorderWidth :: Dimension
+myBorderWidth = 1
+myBrowser :: [Char]
+myBrowser = "firefox"
 mySpacing :: Int
-mySpacing       = 0
+mySpacing = 0
 myLargeSpacing :: Int
-myLargeSpacing  = 30
+myLargeSpacing = 30
 noSpacing :: Int
-noSpacing       = 0
-prompt          = 20
-fg              = "#ebdbb2"
-bg              = "#282828"
-gray            = "#a89984"
-bg1             = "#3c3836"
-bg2             = "#505050"
-bg3             = "#665c54"
-bg4             = "#7c6f64"
+noSpacing = 0
+prompt :: Integer
+prompt = 20
+fg :: [Char]
+fg = "#ebdbb2"
+bg :: [Char]
+bg = "#282828"
+gray :: [Char]
+gray = "#a89984"
+bg1 :: [Char]
+bg1 = "#3c3836"
+bg2 :: [Char]
+bg2 = "#505050"
+bg3 :: [Char]
+bg3 = "#665c54"
+bg4 :: [Char]
+bg4 = "#7c6f64"
 
-green           = "#b8bb26"
-darkgreen       = "#98971a"
-red             = "#fb4934"
-darkred         = "#cc241d"
-yellow          = "#fabd2f"
-blue            = "#83a598"
-purple          = "#d3869b"
-aqua            = "#8ec07c"
-white           = "#eeeeee"
+green :: [Char]
+green = "#b8bb26"
+darkgreen :: [Char]
+darkgreen = "#98971a"
+red :: [Char]
+red = "#fb4934"
+darkred :: [Char]
+darkred = "#cc241d"
+yellow :: [Char]
+yellow = "#fabd2f"
+blue :: [Char]
+blue = "#83a598"
+purple :: [Char]
+purple = "#d3869b"
+aqua :: [Char]
+aqua = "#8ec07c"
+white :: [Char]
+white = "#eeeeee"
 
-pur2            = "#5b51c9"
-blue2           = "#2266d0"
-blue3           = "#154196"
-white2          = "#eef1f6"
-myred           = "#fe8d82"
-myblue          = "#99a7ec"
-mygrey          = "#333333"
+pur2 :: [Char]
+pur2 = "#5b51c9"
+blue2 :: [Char]
+blue2 = "#2266d0"
+blue3 :: [Char]
+blue3 = "#154196"
+white2 :: [Char]
+white2 = "#eef1f6"
+myred :: [Char]
+myred = "#fe8d82"
+myblue :: [Char]
+myblue = "#99a7ec"
+mygrey :: [Char]
+mygrey = "#333333"
 
 -- Font
 
+myFont :: [Char]
 myFont = "xft:NotoSansMono Nerd Font Mono:" ++ "fontformat=truetype:size=10:antialias=true"
 
 -- Layouts
@@ -134,13 +154,14 @@ perWS =
     $ onWorkspace tag3 my3FT
     $ onWorkspace tag4 my3FT
     $ onWorkspace tag5 myFT
-    $ onWorkspace tag6 myFT myAll -- all layouts for all other workspaces
+    $ onWorkspace tag6 myTFT myAll -- all layouts for all other workspaces
 
 
 myFT = simplestFloat ||| myTile ||| myTab ||| myFull
 myFTM = myTile ||| myTab ||| myFull ||| myMagn ||| simplestFloat
 myBFTM = emptyBSP ||| myTile ||| myTab ||| myFull ||| myMagn ||| simplestFloat
 my3FT = myTile ||| myTab ||| myFull ||| my3cmi ||| simplestFloat
+myTFT = myTab ||| myTile ||| myFull ||| my3cmi ||| simplestFloat
 myAll = myTile ||| myTab ||| myFull ||| my3cmi ||| myMagn ||| simplestFloat
 
 myFull = renamed [Replace "Full"] $ spacing 0 $ noBorders Full
@@ -166,6 +187,7 @@ myTab = renamed [Replace "Tabbed"] $ spacing mySpacing $ tabbed
 -- Themes
 -- Prompt themes
 
+myPromptTheme :: XPConfig
 myPromptTheme = def
     { font              = myFont
     , bgColor           = darkgreen
@@ -177,12 +199,14 @@ myPromptTheme = def
     , position          = Top
     }
 
+warmPromptTheme :: XPConfig
 warmPromptTheme = myPromptTheme
     { bgColor           = yellow
     , fgColor           = darkred
     , position          = Top
     }
 
+coldPromptTheme :: XPConfig
 coldPromptTheme = myPromptTheme
     { bgColor           = aqua
     , fgColor           = darkgreen
@@ -192,14 +216,23 @@ coldPromptTheme = myPromptTheme
 -- Workspaces
 -- Use '\x' for displaying unicode.
 
+tag1 :: [Char]
 tag1 = "\xf488"
+tag2 :: [Char]
 tag2 = "\xf489"
+tag3 :: [Char]
 tag3 = "\xf6ed"
+tag4 :: [Char]
 tag4 = "\xf866"
+tag5 :: [Char]
 tag5 = "\xf025"
+tag6 :: [Char]
 tag6 = "\xe7c5"
+tag7 :: [Char]
 tag7 = "\xf03d"
+tag8 :: [Char]
 tag8 = "\xf10c"
+tag9 :: [Char]
 tag9 = "\xf019"
 
 myWorkspaces :: [String]
@@ -214,9 +247,11 @@ showKeybindings x = addName "Show Keybindings" $ io $ do
     hClose h
     return ()
 
+myAdditionalKeys :: XConfig l -> [((KeyMask, KeySym), NamedAction)]
 myAdditionalKeys c = (subtitle "Custom Keys":) $ mkNamedKeymap c $
     myProgramKeys ++ myWindowManagerKeys ++ myMediaKeys
 
+myProgramKeys :: [([Char], NamedAction)]
 myProgramKeys =
     [ ("C-S-l"        , addName "Lock computer"   $ spawn "betterlockscreen -l dim")
     , ("M-s"          , addName "Open Steam"      $ spawn "steam")
@@ -224,10 +259,11 @@ myProgramKeys =
     , ("M-f"          , addName "Open firefox"    $ spawn myBrowser)
     , ("M-S-f"        , addName "Open chromium"   $ spawn "chromium")
     , ("M-g"          , addName "Open terminal"   $ spawn myTerminal)
-    , ("M-r"          , addName "Open Rofi"       $ spawn "rofi -location 0 -show drun -terminal st")
+    , ("M-r"          , addName "Open dmenu"      $ spawn "dmenu_run -fn \"WenQuanYi Micro Hei Mono-10\" -l 10")
     , ("<Print>"      , addName "Take Screenshot" $ spawn "scrot ~/screenshots/%Y-%m-%d-%T-screenshot.png")
     ]
 
+myWindowManagerKeys :: [([Char], NamedAction)]
 myWindowManagerKeys =
     [ ("M-b"          , addName "Do (not) respect polybar"                        $ sendMessage ToggleStruts)
     , ("M-S-b"        , addName "Increase spacing between windows"                $ incSpacing mySpacing)
@@ -263,6 +299,7 @@ myWindowManagerKeys =
     , ("M-M1-r"     , addName "BSP Rotate"    $ sendMessage Rotate)
     ]
 
+myMediaKeys :: [([Char], NamedAction)]
 myMediaKeys =
     [ ("<XF86MonBrightnessUp>"   , addName "Increase backlight"   $ spawn "xbacklight -inc 10")
     , ("<XF86MonBrightnessDown>" , addName "Decrease backlight"   $ spawn "xbacklight -dec 10")
@@ -293,22 +330,24 @@ myManageHook = composeAll
     , role      =? "pop-up"           --> doFloat
     , appName   =? "ncmpcpp"          --> doShift tag5
     , className =? "neomutt"          --> doShift tag3
-    , className =? "weechat"          --> doShift tag4]
+    , className =? "weechat"          --> doShift tag4
+    , className =? "Emacs"            --> doShift tag6]
     where
         role = stringProperty "WM_WINDOW_ROLE"
 
+myManageHook' :: ManageHook
 myManageHook' = composeOne [ isFullscreen -?> doFullFloat ]
 
 
 -- StartupHook
 
+myStartupHook :: X ()
 myStartupHook = do
     setWMName "XMonad 0.15"
     spawn     "$HOME/.config/polybar/launch_x.sh"
     spawnOnce "dunst &"
-    spawnOnce "feh --bg-fill '/home/thomas/Pictures/Wallpapers/berserker_in_the_moonlight_by_fazal_sama_d95sn3c.jpg'"
+    spawnOnce "feh --bg-fill '/home/thomas/Pictures/60181142_p0.jpg'"
     spawnOnce "compton &"
-    spawnOnce "nm-applet &"
     spawnOnce "aria2c --conf-path=/home/thomas/.config/aria2/aria2.conf &"
     spawnOnce "fcitx &"
     spawnOnce "clipit &"
@@ -318,6 +357,7 @@ myStartupHook = do
     spawnOnce "st -c neomutt -n neomutt -e neomutt"
     spawnOnce "st -c weechat -n weechat -e weechat"
     spawnOnce "st -g 150x10 -c ncmpcpp -n ncmpcpp -e ncmpcpp"
+    spawnOnce "emacs"
 
 
 -- Config

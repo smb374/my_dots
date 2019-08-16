@@ -6,7 +6,7 @@
 set $mod Mod4
 
 # fonts
-font pango: SauceCodePro Nerd Font, Awesome, WenQuanYi Micro Hei Mono 10
+font pango: MesloLGSDZ Nerd Font Mono, Awesome, WenQuanYi Micro Hei Mono 10
 
 # set workspace names
 set $tag1 "1:"
@@ -31,14 +31,14 @@ exec --no-startup-id xss-lock -- betterlockscreen -l dim &
 # exec --no-startup-id volctl &
 exec --no-startup-id lxpolkit &
 exec --no-startup-id conky -c .i3.conkyrc -dq &
-exec audacious &
 exec --no-startup-id i3-msg $tag2 && st -n st
 exec --no-startup-id st -n neomutt_con -e neomutt
 exec --no-startup-id st -n weechat_con -e weechat
+exec --no-startup-id st -g 150x10 -c ncmpcpp -n ncmpcpp -e ncmpcpp
 
 assign [class="Google-chrome"] $tag1
 assign [class="Firefox"] $tag1
-assign [class="Audacious"] $tag5
+assign [class="ncmpcpp"] $tag5
 assign [instance="st"] $tag2
 assign [instance="neomutt"] $tag3
 assign [instance="weechat"] $tag4
@@ -49,13 +49,13 @@ assign [class="Code"] $tag6
 for_window [class="Code"] focus
 assign [class="WebTorrent"] $tag7
 for_window [class="WebTorrent"] focus
-assign [class="Nicotine"] $tag9
-for_window [class="Nicotine"] focus
 # resolv i3 transparancy bug
 new_window pixel
 
 # start a terminal
 bindsym $mod+Return exec st
+
+bindsym $mod+b exec firefox
 
 # start drofi dmenu
 bindsym $mod+r      exec --no-startup-id rofi -show drun -font "Monaco for Powerline 18" -terminal st
@@ -71,7 +71,7 @@ bindsym $mod+j focus left
 bindsym $mod+k focus down
 bindsym $mod+l focus up
 bindsym $mod+m focus right
- 
+
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
@@ -191,8 +191,6 @@ workspace $tag7 output LVDS-1
 workspace $tag8 output LVDS-1
 workspace $tag9 output LVDS-1
 workspace $tag10 output LVDS-1
-
-#{% include 'by_os/' + ansible_distribution|lower + '/config.j2' ignore missing %}
 
 # reload the configuration file
 bindsym $mod+Shift+c reload

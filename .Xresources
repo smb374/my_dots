@@ -149,7 +149,7 @@ URxvt*depth: 24
 ! *.color15: #d0d0d0
 ! Emacs Session
 Emacs*FontBackend: xft
-Emacs*font: Meslo Nerd Font-9
+Emacs*font: MesloLGSDZ Nerd Font Mono-9
 ! Rofi Session
 ! ::: rofi :::
 

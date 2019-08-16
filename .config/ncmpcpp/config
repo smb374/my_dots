@@ -1,7 +1,8 @@
 # from https://github.com/Alexander-Miller/dotfiles/blob/master/.config/ncmpcpp/config
 mpd_music_dir = "~/Music/"
 
-mpd_host = "~/.config/mpd/socket"
+mpd_host = 127.0.0.1
+mpd_port = 6600
 mouse_list_scroll_whole_page = "yes"
 lines_scrolled = "1"
 

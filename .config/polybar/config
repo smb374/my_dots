@@ -13,7 +13,7 @@ screenchange-reload = true
 pseudo-transparency = true
 
 [bar/top]
-monitor = LVDS-1
+monitor = ${env:MONITOR:fallback-value}
 monitor-strict = true
 dpi = 72
 bottom = false
@@ -46,15 +46,48 @@ font-4 = siji:pixelsize=10;3
 font-5 = FontAwesome:pixelsize=14;2
 
 
-modules-left = i3
-; modules-left = xmonad
+modules-left = powermenu hostname i3
 modules-center = xwindow
-modules-right = cpu memory temperature backlight battery pulseaudio date
-tray-position = right
-tray-padding = 2
-; tray-background = ${colors.background}
-;wm-restack = i3
+modules-right = cpu memory temperature backlights battery pulseaudio pkg date
 
+[bar/bottom]
+monitor = ${env:MONITOR:fallback-value}
+monitor-strict = true
+dpi = 72
+bottom = true
+width = 100%
+height = 20
+offset-x = 0
+offset-y = 0
+
+background = #00154196
+foreground = ${colors.foreground}
+
+overline-size = 0
+overline-color = #f00
+
+border-size = 0
+border-color = ${colors.background}
+
+spacing = 1
+padding-left = 0
+padding-right = 2
+module-margin-left = 1
+module-margin-right = 2
+
+font-0 = NotoSansMono Nerd Font:pixelsize=12;2
+font-1 = WenQuanYi Micro Hei:pixelsize=12;2
+font-2 = Material Design Icons:pixelsize=12;2
+font-3 = unifont:size=10;2
+font-4 = siji:pixelsize=10;3
+font-5 = FontAwesome:pixelsize=14;2
+
+
+modules-left = mpd
+modules-center =
+modules-right =
+tray-position = right
+tray-padding = 1
 
 [module/bspwm]
 type = internal/bspwm
@@ -114,19 +147,20 @@ ws-icon-8 = 9;
 ws-icon-9 = 10;
 [module/xmonad]
 type = custom/script
-exec = xmonad-log
+exec = socat unix-connect:/tmp/xmonad.sock stdio
 
 tail = true
 [module/xwindow]
 type = internal/xwindow
-label = %title:0:23:...%
+label = %title:0:35:...%
 label-foreground = ${colors.foreground-alt}
 
-[module/backlight]
+[module/backlights]
 type = internal/backlight
+; exec = percentage
 card = intel_backlight
+output = LVDS-1
 enable-scroll = false
-; output = LVDS-1
 format = <ramp> <label>
 label = %percentage%%
 ramp-0 = 
@@ -181,12 +215,35 @@ animation-charging-framerate = 750
 
 [module/cpu]
 type = internal/cpu
-label =  %percentage%%
+; Available tags:
+;   <label> (default)
+;   <bar-load>
+;   <ramp-load>
+;   <ramp-coreload>
+format = <label> <ramp-coreload>
+label =  %percentage%%
+
+; Available tokens:
+;   %percentage% (default) - total cpu load averaged over all cores
+;   %percentage-sum% - Cumulative load on all cores
+;   %percentage-cores% - load percentage for each core
+;   %percentage-core[1-9]% - load percentage for specific core
+
+; Spacing between individual per-core ramps
+ramp-coreload-spacing = 1
+ramp-coreload-0 = ▁
+ramp-coreload-1 = ▂
+ramp-coreload-2 = ▃
+ramp-coreload-3 = ▄
+ramp-coreload-4 = ▅
+ramp-coreload-5 = ▆
+ramp-coreload-6 = ▇
+ramp-coreload-7 = █
 
 
 [module/memory]
 type = internal/memory
-label =  %gb_used%
+label = ﬙ %gb_used%
 
 [module/temperature]
 type = internal/temperature
@@ -198,7 +255,7 @@ format-warn = <ramp> <label-warn>
 
 label = %temperature-c%
 label-warn = %temperature-c%
-label-warn-foreground = #e60053
+label-warn-foreground = #d7b3a5
 
 ramp-0 = 
 ramp-1 = 
@@ -213,7 +270,6 @@ format-muted = ﱝ 0%
 ramp-volume-0 = 奄
 ramp-volume-1 = 奔
 ramp-volume-2 = 墳
-
 [module/pulseaudio]
 type = internal/pulseaudio
 
@@ -225,4 +281,128 @@ label-muted = ﱝ 0%
 ramp-volume-0 = 奄
 ramp-volume-1 = 奔
 ramp-volume-2 = 墳
+[module/pkg]
+type = custom/script
+exec = ~/.config/polybar/pkg.sh
+tail = true
+[module/mpd]
+type = internal/mpd
+
+; Host where mpd is running (either ip or domain name)
+; Can also be the full path to a unix socket where mpd is running.
+host = /home/thomas/.config/mpd/socket
+
+; Seconds to sleep between progressbar/song timer sync
+; Default: 1
+; Available tags:
+;   <label-song> (default)
+;   <label-time>
+;   <bar-progress>
+;   <toggle> - gets replaced with <icon-(pause|play)>
+;   <toggle-stop> - gets replaced with <icon-(stop|play)>
+;   <icon-random>
+;   <icon-repeat>
+;   <icon-repeatone> (deprecated)
+;   <icon-single> - Toggle playing only a single song. Replaces <icon-repeatone>
+;   <icon-consume>
+;   <icon-prev>
+;   <icon-stop>
+;   <icon-play>
+;   <icon-pause>
+;   <icon-next>
+;   <icon-seekb>
+;   <icon-seekf>
+format-online = <icon-prev><icon-seekb><icon-stop><toggle><icon-seekf><icon-next><icon-repeat><icon-random><bar-progress><label-time><label-song>
+;format-playing = ${self.format-online}
+;format-paused = ${self.format-online}
+;format-stopped = ${self.format-online}
+
+; Available tags:
+;   <label-offline>
+format-offline = <label-offline>
+
+; Available tokens:
+;   %artist%
+;   %album-artist%
+;   %album%
+;   %date%
+;   %title%
+; Default: %artist% - %title%
+label-song =  %album% ﴁ %artist%  %title%
+
+; Available tokens:
+;   %elapsed%
+;   %total%
+; Default: %elapsed% / %total%
+label-time = %elapsed% / %total%
+
+; Available tokens:
+;   None
+label-offline = ﱘ mpd is offline
+
+; Only applies if <icon-X> is used
+icon-play = 契
+icon-pause = 
+icon-stop = 栗
+icon-prev = 玲
+icon-next = 怜
+icon-seekb = 丹
+icon-seekf = 
+icon-random = 列
+icon-repeat = 凌
+icon-repeatone = 綾
+icon-single = 稜
+
+; Used to display the state of random/repeat/repeatone/single
+; Only applies if <icon-[random|repeat|repeatone|single]> is used
+toggle-on-foreground = #ff
+toggle-off-foreground = #55
+
+; Only applies if <bar-progress> is used
+bar-progress-width = 15
+bar-progress-indicator = >
+bar-progress-fill = ─
+bar-progress-empty = \
+
+[module/hostname]
+type = custom/script
+interval = 256
+format = "<label> "
+format-prefix = "  "
+format-prefix-foreground = ${colors.foreground-alt}
+format-padding = 0
+format-background = ${colors.background}
+exec = echo "$(whoami)@$(uname -n) =<<  "
+
+[module/github]
+type = internal/github
+; Available tags:
+;   <label> (default)
+format = <label>
+
+; Available tokens:
+;   %notifications% (default)
+; Default: Notifications: %notifications%
+label = ﯙ %notifications%
+; Accessing an access token stored in file
+token = ${file:/home/thomas/github_access.token}
+; Whether empty notifications should be displayed or not
+empty-notifications = false
+; Number of seconds in between requests
+interval = 10
+[module/powermenu]
+type = custom/menu
+label-open = ""
+; label-open-foreground = ${colors.alert}
+label-close = "<<|"
+label-separator = " > "
+; reboot
+menu-0-1 = ""
+menu-0-1-exec = systemctl reboot
+; shutdown
+menu-0-0 = ""
+menu-0-0-exec = systemctl poweroff
+; suspend
+menu-0-2 = ""
+menu-0-2-exec = systemctl suspend
 ; vim:ft=dosini

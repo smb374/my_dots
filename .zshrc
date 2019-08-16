@@ -11,7 +11,8 @@ alias anboxbr='sudo nmcli con add type bridge ifname anbox0 -- connection.id anb
 alias aria2rpc='aria2c --conf-path=/home/thomas/.aria2/config/aria2.conf -D'
 alias diskspeed='fio --name TEST --eta-newline=5s --filename=fio-tempfile.dat --rw=rw --size=500m --io_size=10g --blocksize=2048k --ioengine=libaio --fsync=10000 --iodepth=32 --numjobs=1 --runtime=60 --group_reporting'
 alias dmesg='dmesg --color=always | less'
-alias emacs='emacs -nw'
+alias dre='cd $HOME/dwm/ && make clean && make && cd -'
+alias emacs='emacs -nw '
 alias fbterm='FBTERM=1 exec fcitx-fbterm-helper -l'
 alias fl2ogg='find . -name "*flac" -exec oggenc -q 10 -b 485 {} \; && find . -iname "*.flac" -delete'
 alias freeup='sudo zsh -c "echo 3 > /proc/sys/vm/drop_caches"'
@@ -53,13 +54,16 @@ export LESS='-R '
 export LESSOPEN="| /usr/bin/source-highlight-esc.sh %s"
 export LV2_PATH="/usr/lib/lv2:/usr/local/lib/lv2:~/.lv2"
 export LXVST_PATH="/usr/lib/lxvst:/usr/local/lib/lxvst:~/.lxvst"
-export MPD_HOST=/home/thomas/.config/mpd/socket
+# export MPD_HOST=/home/thomas/.config/mpd/socket
+export MPD_HOST=127.0.0.1
+export MPD_PORT=6600
 export PROMPT_COMMAND='echo -ne "\033]2;$(PWD/#$(HOME)/\~)\007"'
-export PATH="/home/thomas/.local/bin:$PATH:$HOME/bin/:/usr/bin/core_perl/:/usr/local/bin:/home/thomas/.vim/bin/:/home/thomas/.gem/ruby/2.5.0/bin:/home/thomas/.gem/ruby/2.6.0/bin:/home/thomas/eclipse_bin/photon/eclipse:$JAVA_HOME/bin"
+export PATH="$HOME/.cargo/bin:/home/thomas/.local/bin:$PATH:$HOME/bin/:/usr/bin/core_perl/:/usr/local/bin:/home/thomas/.vim/bin/:/home/thomas/.gem/ruby/2.5.0/bin:/home/thomas/.gem/ruby/2.6.0/bin:/home/thomas/eclipse_bin/photon/eclipse:$JAVA_HOME/bin"
 export VBOX_USB="usbfs"
 export VISUAL="vim"
 export VST_PATH="/usr/lib/vst:/usr/local/lib/vst:~/.vst"
 eval $(thefuck --alias)
+eval $(dircolors -p | perl -pe 's/^((CAP|S[ET]|O[TR]|M|E)\w+).*/$1 00/' | dircolors -)
 # create a zkbd compatible hash;
 # to add other keys to this hash, see: man 5 terminfo
 typeset -g -A key
@@ -97,7 +101,7 @@ if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
     zle -N zle-line-init
     zle -N zle-line-finish
 fi
-# bindkey -e
+bindkey -v
 echo '' > /tmp/album
 HISTFILE=/home/thomas/.zsh_history
 HISTSIZE=1000000
@@ -143,6 +147,13 @@ zstyle ':completion:*:processes' command 'ps -au$USER'
 
 autoload -Uz compinit
 autoload -U complist
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey '^E' edit-command-line                   # Opens Vim to edit current command line
+bindkey '^R' history-incremental-search-backward # Perform backward search in command line history
+bindkey '^S' history-incremental-search-forward  # Perform forward search in command line history
+bindkey '^P' history-search-backward             # Go back/search in history (autocomplete)
+bindkey '^N' history-search-forward              # Go forward/search in history (autocomplete)
 [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]] && compinit || compinit -C
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

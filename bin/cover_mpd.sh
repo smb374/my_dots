@@ -2,7 +2,7 @@
 
 filename="cover_mpd.png"
 placeholder="/home/thomas/placeholder.png"
-file="/home/thomas/Music/$(mpc --format %file% current)" # current music file path
+file="/home/thomas/Music/$(mpc --host=127.0.0.1 -p 6600 --format %file% current)" # current music file path
 album=$(dirname "$file") # current album dir
 na=$(mpc --format %album% current) # current album name
 ca=$(cat /tmp/album) # cached album name
