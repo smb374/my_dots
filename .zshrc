@@ -49,6 +49,7 @@ export EDITOR="vim"
 export INPUTRC=/home/thomas/.inputrc
 export JAVA_HOME="/home/thomas/jdk1.8.0_181"
 export LADSPA_PATH="/usr/lib/ladspa"
+export LC_CTYPE="zh_TW.UTF-8"
 export LD_LIBRARY_PATH="/usr/lib64/nvidia/xorg/:/usr/lib32/nvidia/xorg/:/usr/lib64/nvidia/:/usr/lib32/nvidia:/usr/lib:"
 export LESS='-R '
 export LESSOPEN="| /usr/bin/source-highlight-esc.sh %s"

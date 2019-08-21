@@ -77,7 +77,7 @@ myTerminal = "st"
 myModMask :: KeyMask
 myModMask = mod4Mask
 myBorderWidth :: Dimension
-myBorderWidth = 1
+myBorderWidth = 0
 myBrowser :: [Char]
 myBrowser = "firefox"
 mySpacing :: Int

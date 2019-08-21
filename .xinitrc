@@ -66,16 +66,14 @@ spectrwm_startup () {
 #xrandr --setprovideroutputsource modesetting NVIDIA-0
 xrdb ~/.Xresources
 xrandr --auto
-# wal -R
-# exec i3
-# exec dwm
 xsetroot -cursor_name left_ptr
 export MONITOR=$(polybar -m|tail -1|sed -e 's/:.*$//g')
 xset m 0 0
 # exec $HOME/.xmonad/xmonad-x86_64-linux
 # systemctl --user restart mpd 2>/dev/null
-exec ~/.local/bin/xmonad
-# exec i3
+# exec ~/.local/bin/xmonad
+# exec bspwm
+exec i3
 # dwm_startup
 # exec stumpwm.ros
 # spectrwm_startup

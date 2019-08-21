@@ -1,5 +1,5 @@
 [colors]
-background = #4b232F5A
+background = #3C232F5A
 foreground = #eef1f6
 foreground-alt = #eef1f6
 background-alt = #cc961319
@@ -21,6 +21,7 @@ width = 100%
 height = 20
 offset-x = 0
 offset-y = 0
+enable-ipc = true
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -58,6 +59,7 @@ width = 100%
 height = 20
 offset-x = 0
 offset-y = 0
+enable-ipc = true
 
 background = #00154196
 foreground = ${colors.foreground}
@@ -84,7 +86,7 @@ font-5 = FontAwesome:pixelsize=14;2
 
 modules-left = mpd
 modules-center =
-modules-right = cpu memory temperature pkg
+modules-right = cpu memory temperature
 tray-position = right
 tray-padding = 1
 
@@ -244,7 +246,7 @@ ramp-coreload-7 = █
 [module/wireless-network]
 type = internal/network
 interface = wlp3s0
-label-connected = 直 %essid%
+label-connected = 直 %essid% %signal%%
 label-disconnected = 睊 not connected
 
 [module/memory]

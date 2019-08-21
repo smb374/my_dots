@@ -38,7 +38,7 @@ progressbar_color = "black"
 progressbar_look = "▃▃▃"
 #progressbar_look = "─⊙ "
 
-execute_on_song_change="~/bin/ncmpcpp-notification"
+execute_on_song_change="~/rust_prac/notify2/target/debug/notify2"
 
 mouse_support = "yes"
 header_visibility = "no"

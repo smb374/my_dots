@@ -255,3 +255,5 @@ st.color12:      #1081d6
 st.color13:      #5350b9
 st.color14:      #0f7ddb
 st.color15:      #ffffff
+
+dzen2.font: MesloLGSDZ Nerd Font Mono-9
