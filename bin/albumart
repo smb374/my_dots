@@ -10,8 +10,8 @@ function reset_background
 }
 
 {
-    album="$(mpc --format %album% current -p 6601)"
-    file="$(mpc --format %file% current -p 6601)"
+    album="$(mpc --format %album% current -p 6600)"
+    file="$(mpc --format %file% current -p 6600)"
     album_dir="${file%/*}"
     [[ -z "$album_dir" ]] && exit 1
     album_dir="$MUSIC_DIR/$album_dir"
@@ -20,7 +20,7 @@ function reset_background
     src="$(echo -n "$covers" | head -n1)"
     rm -f "$COVER" 
     if [[ -n "$src" ]] ; then
-	convert "$src" -resize 700x "$COVER"
+    convert "$src" -resize 700x "$COVER"
         if [[ -f "$COVER" ]] ; then
            #scale down the cover to 30% of the original
            printf "\e]20;${COVER};70x70+87+00:op=keep-aspect\a"

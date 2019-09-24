@@ -9,6 +9,7 @@ source /home/thomas/.ghcup/env
 alias ..='cd ..'
 alias anboxbr='sudo nmcli con add type bridge ifname anbox0 -- connection.id anbox-net ipv4.method shared ipv4.addresses 192.168.250.1/24'
 alias aria2rpc='aria2c --conf-path=/home/thomas/.aria2/config/aria2.conf -D'
+alias ccvpn='sudo openfortivpn 140.113.235.174:443 -u poyehchen --trusted-cert 2980c8c04d4a8648f8ffec2edb220af6dead56ae5918be9ff9806811fccf9171'
 alias diskspeed='fio --name TEST --eta-newline=5s --filename=fio-tempfile.dat --rw=rw --size=500m --io_size=10g --blocksize=2048k --ioengine=libaio --fsync=10000 --iodepth=32 --numjobs=1 --runtime=60 --group_reporting'
 alias dmesg='dmesg --color=always | less'
 alias dre='cd $HOME/dwm/ && make clean && make && cd -'
@@ -60,11 +61,13 @@ export MPD_HOST=127.0.0.1
 export MPD_PORT=6600
 export PROMPT_COMMAND='echo -ne "\033]2;$(PWD/#$(HOME)/\~)\007"'
 export PATH="$HOME/.cargo/bin:/home/thomas/.local/bin:$PATH:$HOME/bin/:/usr/bin/core_perl/:/usr/local/bin:/home/thomas/.vim/bin/:/home/thomas/.gem/ruby/2.5.0/bin:/home/thomas/.gem/ruby/2.6.0/bin:/home/thomas/eclipse_bin/photon/eclipse:$JAVA_HOME/bin"
+export RUST_SRC_PATH="$HOME/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src"
 export VBOX_USB="usbfs"
 export VISUAL="vim"
 export VST_PATH="/usr/lib/vst:/usr/local/lib/vst:~/.vst"
 eval $(thefuck --alias)
 eval $(dircolors -p | perl -pe 's/^((CAP|S[ET]|O[TR]|M|E)\w+).*/$1 00/' | dircolors -)
+export LS_COLORS
 # create a zkbd compatible hash;
 # to add other keys to this hash, see: man 5 terminfo
 typeset -g -A key

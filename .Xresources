@@ -5,11 +5,10 @@ Xterm*vt100*faceNameDoublesize: WenQuanYi Micro Hei Mono:pixelsize:13:antialias:
 URxvt*font: xft:MesloLGSDZ Nerd Font Mono:size=9:minspace=true,xft:WenQuanYi Micro Hei Mono:size=9:minspace=true
 URxvt*urlLauncher:firefox
 URxvt*scrollBar:false
-URxvt*perl-ext-common: default,matcher,tabbed
+! URxvt*perl-ext-common: default
 URxvt*url-launcher: /usr/bin/firefox
 URxvt*matcher*button: 1
-URxvt*termName: xterm-256color
-! URxvt*background: rgba:2100/2100/2100/ffff
+URxvt*termName: rxvt-unicode
 
 ! URxvt*letterSpace: 1
 ! set input method
@@ -85,6 +84,45 @@ URxvt*depth: 24
 ! #define   coffee           #c7915b
 ! #define   dirtyblonde      #f4cf86
 !
+! special
+*.foreground:   #d6dbe5
+*.background:   #131313
+*.cursorColor:  #d6dbe5
+
+! black
+*.color0:       #1f1f1f
+*.color8:       #d6dbe5
+
+! red
+*.color1:       #f81118
+*.color9:       #de352e
+
+! green
+*.color2:       #2dc55e
+*.color10:      #1dd361
+
+! yellow
+*.color3:       #ecba0f
+*.color11:      #f3bd09
+
+! blue
+*.color4:       #2a84d2
+*.color12:      #1081d6
+
+! magenta
+*.color5:       #4e5ab7
+*.color13:      #5350b9
+
+! cyan
+*.color6:       #1081d6
+*.color14:      #0f7ddb
+
+! white
+*.color7:       #d6dbe5
+*.color15:      #ffffff
+URxvt.depth: 32
+URxvt.background: rgba:0000/0000/0000/cc00
+
 ! *.foreground:   plain
 ! *.background:   blackgravel
 ! *.cursorColor:  plain
@@ -104,28 +142,28 @@ URxvt*depth: 24
 ! *.color13:      lightgravel
 ! *.color14:      darkroast
 ! *.color15:      snow
-*.foreground: #ccb18b
-*.cursorcolor:#ccb18b
-*.colorbd:    #6699cc
-*.colorul:    #ccb18b
-*.colorit:    #ccb18b
-*background:  #2d2d31
-*color0:      #1a1a1a
-*color1:      #cc6666
-*color2:      #66aa66
-*color3:      #f0c674
-*color4:      #557799
-*color5:      #a374a8
-*color6:      #339999
-*color7:      #a3a3a3
-*color8:      #4d4d4d
-*color9:      #dd7777
-*color10:     #77bb77
-*color11:     #f2d785
-*color12:     #5588bb
-*color13:     #b485b9
-*color14:     #2fa7a7
-*color15:     #cccccc
+! *.foreground: #ccb18b
+! *.cursorcolor:#ccb18b
+! *.colorbd:    #6699cc
+! *.colorul:    #ccb18b
+! *.colorit:    #ccb18b
+! *background:  #2d2d31
+! *color0:      #1a1a1a
+! *color1:      #cc6666
+! *color2:      #66aa66
+! *color3:      #f0c674
+! *color4:      #557799
+! *color5:      #a374a8
+! *color6:      #339999
+! *color7:      #a3a3a3
+! *color8:      #4d4d4d
+! *color9:      #dd7777
+! *color10:     #77bb77
+! *color11:     #f2d785
+! *color12:     #5588bb
+! *color13:     #b485b9
+! *color14:     #2fa7a7
+! *color15:     #cccccc
 ! *.background: #101010
 ! *.foreground: #d0d0d0
 ! !foreground: #66ff66

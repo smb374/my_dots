@@ -1,11 +1,7 @@
-#!/usr/bin/env perl
-use strict;
-use warnings;
-use Net::DBus;
+#!/bin/sh
 
-my@mpc=split/\n/,qx/ mpc -f "%album%\n%artist%\n%title%" current /;
-my($sum,$body)=(shift@mpc,join"\n",@mpc);
-my$bus=Net::DBus->find;
-my$notify_service=$bus->get_service("org.freedesktop.Notifications");
-my$notify_target=$notify_service->get_object("/org/freedesktop/Notifications","org.freedesktop.Notifications");
-$notify_target->Notify("ncmpcpp",345564,"",$sum,$body,[],{},3000);
+~/rust_prac/mpd_cover2/target/debug/mpd_cover2 && ~/rust_prac/notify2/target/debug/notify2
+src=$(~/rust_prac/get_cover_path/target/debug/get_cover_path)
+COVER="${src}.resized.png"
+convert "${src}" -resize x200 "${COVER}"
+printf "\e]20;${COVER};14x90+99+30:op=keep-aspect;\a"

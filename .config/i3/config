@@ -3,7 +3,7 @@
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
 # mod key
-set $mod Mod4
+set $mod Mod1
 
 # fonts
 font pango: MesloLGSDZ Nerd Font Mono, Awesome, WenQuanYi Micro Hei Mono 10
@@ -19,10 +19,11 @@ set $tag7 "7:"
 set $tag8 "8:"
 set $tag9 "9:"
 # execs
+exec --no-startup-id ~/rust_prac/mpd_cover2/target/debug/mpd_cover2
+exec --no-startup-id compton --config ~/.config/compton/compton.conf &
 exec --no-startup-id feh --bg-fill '/home/thomas/Pictures/60181142_p0.jpg'
-exec --no-startup-id compton &
 exec --no-startup-id dunst &
-exec --no-startup-id aria2c --conf-path=/home/thomas/.aria2/config/aria2.conf -D &
+exec --no-startup-id aria2c --conf-path=/home/thomas/.config/aria2/aria2.conf &
 exec --no-startup-id fcitx &
 exec --no-startup-id clipit &
 exec --no-startup-id xss-lock -- betterlockscreen -l dim &
@@ -36,13 +37,15 @@ exec --no-startup-id conky -c .i3.conkyrc -dq &
 exec --no-startup-id st -n st
 exec --no-startup-id st -n neomutt_con -e neomutt
 exec --no-startup-id st -n weechat_con -e weechat
-exec --no-startup-id st -g 150x10 -c ncmpcpp -n ncmpcpp -e ncmpcpp
+# exec --no-startup-id st -g 160x11 -n ncmpcpp -c ncmpcpp -e ~/bin/run_ncmpcpp
+exec --no-startup-id urxvt -name ncmpcpp -g 130x10 -pixmap /tmp/cover_mpd.png";"14x90+99+30":"op=keep-aspect -e ncmpcpp
 exec --no-startup-id emacs
 
 assign [class="Google-chrome"] $tag1
 assign [class="Firefox"] $tag1
-assign [class="ncmpcpp"] $tag5
-for_window [class="ncmpcpp"] floating enable, border normal
+# for ncmpcpp since I use st instead of urxvt
+assign [instance="ncmpcpp"] $tag5
+for_window [instance="ncmpcpp"] floating enable, border normal
 assign [instance="st"] $tag2
 assign [instance="neomutt"] $tag3
 assign [instance="weechat"] $tag4
@@ -56,6 +59,17 @@ assign [class="WebTorrent"] $tag7
 for_window [class="WebTorrent"] focus
 # resolv i3 transparancy bug
 new_window pixel
+default_border none
+
+# colors
+# class                 border  backgr.     text    indicator child_border
+client.focused          #4c7899 #285577cc   #ffffff #2e9ef4   #285577
+client.focused_inactive #333333 #5f676acc   #ffffff #484e50   #5f676a
+client.unfocused        #333333 #222222cc   #888888 #292d2e   #222222
+client.urgent           #2f343a #900000cc   #ffffff #900000   #900000
+client.placeholder      #000000 #0c0c0ccc   #ffffff #000000   #0c0c0c
+
+client.background       #ffffff
 
 # start a terminal
 bindsym $mod+g exec st
@@ -125,13 +139,6 @@ bindsym $mod+Shift+s move scratchpad
 workspace_auto_back_and_forth yes
 
 
-#colors
-# class                 border  backgr. text    indicator child_border
-client.focused          #FFFFFF #FFFFFF #000000 #000000   #000000
-client.focused_inactive #333333 #5f676a #ffffff #484e50   #000000
-client.unfocused        #333333 #222222 #888888 #292d2e   #222222
-client.urgent           #2f343a #900000 #ffffff #900000   #900000
-client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 
 #i3-gaps
 for_window [class="^.*"] border pixel 0
@@ -191,7 +198,7 @@ workspace $tag8 output LVDS-1
 workspace $tag9 output LVDS-1
 
 # reload the configuration file
- bindsym mod1+Shift+q reload
+bindsym mod4+Shift+q reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+q restart
 
@@ -218,11 +225,14 @@ bindsym $mod+Control+r mode "resize"
 # polybar exec
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 # Misc Controls
-bindsym XF86AudioRaiseVolume exec  amixer -q -D pulse sset Master 5%+
-bindsym XF86AudioLowerVolume exec  amixer -q -D pulse sset Master 5%-
-bindsym XF86AudioMute        exec  amixer -q -D pulse sset Master toggle
-bindsym XF86MonBrightnessDown exec xbacklight -dec 10
-bindsym XF86MonBrightnessUp exec  xbacklight -inc 10
-bindsym --release Print exec scrot ~/screenshots/%Y-%m-%d-%T-screenshot.png
-bindsym $mod+Control+l exec betterlockscreen -l dim
-bindsym $mod+Shift+q exec i3-msg exit
+bindsym XF86AudioRaiseVolume    exec amixer -q -D pulse sset Master 5%+
+bindsym XF86AudioLowerVolume    exec amixer -q -D pulse sset Master 5%-
+bindsym XF86AudioMute           exec amixer -q -D pulse sset Master toggle
+bindsym XF86MonBrightnessDown   exec xbacklight -dec 10
+bindsym XF86MonBrightnessUp     exec xbacklight -inc 10
+bindsym XF86AudioPlay           exec mpc toggle
+bindsym XF86AudioNext           exec mpc next
+bindsym XF86AudioPrev           exec mpc prev
+bindsym --release Print         exec scrot ~/screenshots/%Y-%m-%d-%T-screenshot.png
+bindsym $mod+Control+l          exec betterlockscreen -l dim
+bindsym $mod+Shift+q            exec i3-msg exit

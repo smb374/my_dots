@@ -46,9 +46,9 @@ font-4 = siji:pixelsize=10;3
 font-5 = FontAwesome:pixelsize=14;2
 
 
-modules-left = powermenu i3
+modules-left = powermenu hostname i3
 modules-center = xwindow
-modules-right = wireless-network backlights battery pulseaudio date
+modules-right = wireless-network ether-network backlights battery pulseaudio date
 
 [bar/bottom]
 monitor = ${env:MONITOR:fallback-value}
@@ -87,6 +87,7 @@ font-5 = FontAwesome:pixelsize=14;2
 modules-left = mpd
 modules-center =
 modules-right = cpu memory temperature
+tray-background = ${colors.background}
 tray-position = right
 tray-padding = 1
 
@@ -117,6 +118,7 @@ index-sort = true
 wrapping-scroll = false
 strip-wsnumbers = true
 pin-workspaces = false
+; enable-click = false
 
 label-mode = %mode%
 label-mode-padding = 2
@@ -250,6 +252,12 @@ type = internal/network
 interface = wlp3s0
 label-connected = 直 %essid% %signal%%
 label-disconnected = 睊 not connected
+
+[module/ether-network]
+type = internal/network
+interface = enp2s0
+label-connected = ﬕ %local_ip%
+label-disconnected = ﬕ not connected
 
 [module/memory]
 type = internal/memory

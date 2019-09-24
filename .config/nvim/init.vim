@@ -283,6 +283,8 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'neomake/neomake'
     Plug 'ndmitchell/ghcid', { 'rtp': 'plugins/nvim' }
     Plug 'ekalinin/Dockerfile.vim'
+    Plug 'rust-lang/rust.vim'
+    Plug 'racer-rust/vim-racer'
 call plug#end()
 nmap <Leader>pi :PlugInstall<CR>
 " Plugin Settings
@@ -687,4 +689,6 @@ map <Leader>lf :call LanguageClient#textDocument_formatting()<CR>
 map <Leader>lb :call LanguageClient#textDocument_references()<CR>
 map <Leader>la :call LanguageClient#textDocument_codeAction()<CR>
 map <Leader>ls :call LanguageClient#textDocument_documentSymbol()<CR>
-
+"" racer
+let g:racer_cmd = "/home/thomas/.cargo/bin/racer"
+let g:racer_experimental_completer = 1
