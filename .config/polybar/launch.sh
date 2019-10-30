@@ -7,7 +7,7 @@ killall -q polybar
 while pgrep -x polybar >/dev/null; do sleep 1; done
 
 # Launch bar
-polybar top &
-polybar bottom &
+MONITOR=$(polybar -m|tail -n 1|sed -e 's/:.*$//g') polybar -r top &
+MONITOR=$(polybar -m|tail -n 1|sed -e 's/:.*$//g') polybar -r bottom &
 
 echo "Bars launched..."

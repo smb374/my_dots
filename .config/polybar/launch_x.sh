@@ -7,7 +7,7 @@ killall -q polybar
 while pgrep -x polybar >/dev/null; do sleep 1; done
 
 # Launch bar
-polybar -c ~/.config/polybar/config_xmonad top &
-polybar -c ~/.config/polybar/config_xmonad bottom &
+MONITOR=$(polybar -m|tail -1|sed -e 's/:.*$//g') polybar -r -c ~/.config/polybar/config_xmonad top &
+MONITOR=$(polybar -m|tail -1|sed -e 's/:.*$//g') polybar -r -c ~/.config/polybar/config_xmonad bottom &
 
 echo "Bars launched..."

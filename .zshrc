@@ -1,10 +1,10 @@
 # ~/.zshrc
 # source <(antibody init)
 # antibody bundle < ~/.zsh_plugins.txt
-source ~/.profile
+# source ~/.profile
 source ~/.zsh_plugins.sh
-source /etc/profile.d/plan9.sh
-source /home/thomas/.ghcup/env
+# source /etc/profile.d/plan9.sh
+# source /home/thomas/.ghcup/env
 
 alias ..='cd ..'
 alias anboxbr='sudo nmcli con add type bridge ifname anbox0 -- connection.id anbox-net ipv4.method shared ipv4.addresses 192.168.250.1/24'
@@ -33,6 +33,9 @@ alias ptt='ssh bbsu@ptt.cc'
 alias rmbs='find -L . -name . -o -type d -prune -o -type l -exec rm {} +'
 alias rs='screen -r'
 alias sudo='sudo '
+alias Syu='yay -Syu'
+alias S='yay -S '
+alias Ss='yay -Ss '
 alias tat='tmux a -t '
 alias termite='termite --class termite --name termite'
 alias tnew='tmux new -s'
@@ -68,10 +71,11 @@ export VST_PATH="/usr/lib/vst:/usr/local/lib/vst:~/.vst"
 eval $(thefuck --alias)
 eval $(dircolors -p | perl -pe 's/^((CAP|S[ET]|O[TR]|M|E)\w+).*/$1 00/' | dircolors -)
 export LS_COLORS
+
 # create a zkbd compatible hash;
 # to add other keys to this hash, see: man 5 terminfo
 typeset -g -A key
-
+autoload zkbd
 key[Home]="$terminfo[khome]"
 key[End]="$terminfo[kend]"
 key[Insert]="$terminfo[kich1]"
@@ -84,15 +88,24 @@ key[Right]="$terminfo[kcuf1]"
 key[PageUp]="$terminfo[kpp]"
 key[PageDown]="$terminfo[knp]"
 # setup key accordingly
-[[ -n "$key[Home]" ]]       && bindkey "$key[Home]"         beginning-of-line
-[[ -n "$key[End]" ]]        && bindkey "$key[End]"          end-of-line
-[[ -n "$key[Insert]" ]]     && bindkey "$key[Insert]"       overwrite-mode
-[[ -n "$key[Backspace]" ]]  && bindkey "$key[Backspace]"    backward-delete-char
-[[ -n "$key[Delete]" ]]     && bindkey "$key[Delete]"       delete-char
-[[ -n "$key[Up]" ]]         && bindkey "$key[Up]"           history-substring-search-up
-[[ -n "$key[Down]" ]]       && bindkey "$key[Down]"         history-substring-search-down
-[[ -n "$key[Left]" ]]       && bindkey "$key[Left]"         backward-char
-[[ -n "$key[Right]" ]]      && bindkey "$key[Right]"        forward-char
+# [[ -n "$key[Home]" ]]       && bindkey "$key[Home]"         beginning-of-line
+# [[ -n "$key[End]" ]]        && bindkey "$key[End]"          end-of-line
+# [[ -n "$key[Insert]" ]]     && bindkey "$key[Insert]"       overwrite-mode
+# [[ -n "$key[Backspace]" ]]  && bindkey "$key[Backspace]"    backward-delete-char
+# [[ -n "$key[Delete]" ]]     && bindkey "$key[Delete]"       delete-char
+# [[ -n "$key[Up]" ]]         && bindkey "$key[Up]"           history-substring-search-up
+# [[ -n "$key[Down]" ]]       && bindkey "$key[Down]"         history-substring-search-down
+# [[ -n "$key[Left]" ]]       && bindkey "$key[Left]"         backward-char
+# [[ -n "$key[Right]" ]]      && bindkey "$key[Right]"        forward-char
+bindkey "$key[Home]"         beginning-of-line
+bindkey "$key[End]"          end-of-line
+bindkey "$key[Insert]"       overwrite-mode
+bindkey "$key[Backspace]"    backward-delete-char
+bindkey "$key[Delete]"       delete-char
+bindkey "$key[Up]"           history-substring-search-up
+bindkey "$key[Down]"         history-substring-search-down
+bindkey "$key[Left]"         backward-char
+bindkey "$key[Right]"        forward-char
 # Finally, make sure the terminal is in application mode, when zle is
 # active. Only then are the values from $terminfo valid.
 if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then

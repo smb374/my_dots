@@ -48,7 +48,7 @@ font-5 = FontAwesome:pixelsize=14;2
 
 modules-left = powermenu hostname xmonad
 modules-center =
-modules-right = wireless-network backlights battery pulseaudio date
+modules-right = wireless-network ether-network backlights battery pulseaudio date
 
 [bar/bottom]
 monitor = ${env:MONITOR:fallback-value}
@@ -87,6 +87,7 @@ font-5 = FontAwesome:pixelsize=14;2
 modules-left = mpd
 modules-center =
 modules-right = cpu memory temperature
+tray-background = ${colors.background}
 tray-position = right
 tray-padding = 1
 
@@ -116,24 +117,27 @@ format = <label-state> <label-mode>
 index-sort = true
 wrapping-scroll = false
 strip-wsnumbers = true
-pin-workspaces = true
+pin-workspaces = false
+; enable-click = false
 
+label-mode = %mode%
 label-mode-padding = 2
 label-mode-foreground = #000
 label-mode-background = #828bb9
 
-label-focused = %index% %name%
-label-focused-background = ${module/bspwm.label-focused-background}
+label-focused = %name%
+label-focused-foreground = #AF6E6D
+label-focused-background = ${colors.background}
 label-focused-padding = ${module/bspwm.label-focused-padding}
 
-label-unfocused = %index% %name%
+label-unfocused = %name%
 label-unfocused-padding = ${module/bspwm.label-occupied-padding}
 
-label-urgent = %index% %name%!
+label-urgent = %name%!
 label-urgent-background = ${module/bspwm.label-urgent-background}
 label-urgent-padding = ${module/bspwm.label-urgent-padding}
 
-label-visible = %index% %name%
+label-visible = %name%
 label-visible-background = ${self.label-focused-background}
 label-visible-padding = ${self.label-focused-padding}
 
@@ -160,8 +164,8 @@ label-foreground = ${colors.foreground-alt}
 [module/backlights]
 type = internal/backlight
 ; exec = percentage
-card = intel_backlight
-output = LVDS-1
+card = amdgpu_bl0
+output = eDP
 enable-scroll = false
 format = <ramp> <label>
 label = %percentage%%
@@ -245,9 +249,15 @@ ramp-coreload-7 = █
 
 [module/wireless-network]
 type = internal/network
-interface = wlp3s0
+interface = wlp1s0
 label-connected = 直 %essid% %signal%%
 label-disconnected = 睊 not connected
+
+[module/ether-network]
+type = internal/network
+interface = enp4s0
+label-connected = ﬕ %local_ip%
+label-disconnected = ﬕ not connected
 
 [module/memory]
 type = internal/memory
@@ -405,13 +415,16 @@ label-open = ""
 ; label-open-foreground = ${colors.alert}
 label-close = "<<|"
 label-separator = " > "
+; exit
+menu-0-0 = 
+menu-0-0-exec = i3-msg exit
 ; reboot
-menu-0-1 = ""
-menu-0-1-exec = systemctl reboot
+menu-0-2 = ""
+menu-0-2-exec = reboot
 ; shutdown
-menu-0-0 = ""
-menu-0-0-exec = systemctl poweroff
-; suspend
-menu-0-2 = ""
-menu-0-2-exec = systemctl suspend
+menu-0-1 = ""
+menu-0-1-exec = poweroff
+; ; suspend
+; menu-0-3 = ""
+; menu-0-3-exec = systemctl suspend
 ; vim:ft=dosini

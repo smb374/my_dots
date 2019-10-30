@@ -3,7 +3,7 @@
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
 # mod key
-set $mod Mod1
+set $mod Mod4
 
 # fonts
 font pango: MesloLGSDZ Nerd Font Mono, Awesome, WenQuanYi Micro Hei Mono 10
@@ -20,7 +20,8 @@ set $tag8 "8:"
 set $tag9 "9:"
 # execs
 exec --no-startup-id ~/rust_prac/mpd_cover2/target/debug/mpd_cover2
-exec --no-startup-id compton --config ~/.config/compton/compton.conf &
+# exec --no-startup-id compton --config ~/.config/compton/compton.conf &
+exec --no-startup-id compton &
 exec --no-startup-id feh --bg-fill '/home/thomas/Pictures/60181142_p0.jpg'
 exec --no-startup-id dunst &
 exec --no-startup-id aria2c --conf-path=/home/thomas/.config/aria2/aria2.conf &
@@ -34,7 +35,6 @@ exec --no-startup-id conky -c .i3.conkyrc -dq &
 # exec --no-startup-id i3-msg $tag4 && sleep 0.05 && st -n weechat_con -e weechat
 # exec --no-startup-id i3-msg $tag5 && sleep 0.05 && st -g 150x10 -c ncmpcpp -n ncmpcpp -e ncmpcpp
 # exec --no-startup-id i3-msg $tag6 && sleep 0.05 && emacs
-exec --no-startup-id st -n st
 exec --no-startup-id st -n neomutt_con -e neomutt
 exec --no-startup-id st -n weechat_con -e weechat
 # exec --no-startup-id st -g 160x11 -n ncmpcpp -c ncmpcpp -e ~/bin/run_ncmpcpp
@@ -46,7 +46,6 @@ assign [class="Firefox"] $tag1
 # for ncmpcpp since I use st instead of urxvt
 assign [instance="ncmpcpp"] $tag5
 for_window [instance="ncmpcpp"] floating enable, border normal
-assign [instance="st"] $tag2
 assign [instance="neomutt"] $tag3
 assign [instance="weechat"] $tag4
 assign [class="Emacs"] $tag6
@@ -77,7 +76,7 @@ bindsym $mod+g exec st
 bindsym $mod+f exec firefox
 
 # start drofi dmenu
-bindsym $mod+r exec --no-startup-id dmenu_run -fn "WenQuanYi Micro Hei Mono-10" -l 10
+bindsym $mod+r exec --no-startup-id rofi -show drun -show-icons -icon-theme Papirus-Dark
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -187,18 +186,18 @@ bindsym $mod+Shift+9 move container to workspace $tag9
 
 
 #assign workspace to screens
-workspace $tag1 output LVDS-1
-workspace $tag2 output LVDS-1
-workspace $tag3 output LVDS-1
-workspace $tag4 output LVDS-1
-workspace $tag5 output LVDS-1
-workspace $tag6 output LVDS-1
-workspace $tag7 output LVDS-1
-workspace $tag8 output LVDS-1
-workspace $tag9 output LVDS-1
+workspace $tag1 output eDP
+workspace $tag2 output eDP
+workspace $tag3 output eDP
+workspace $tag4 output eDP
+workspace $tag5 output eDP
+workspace $tag6 output eDP
+workspace $tag7 output eDP
+workspace $tag8 output eDP
+workspace $tag9 output eDP
 
 # reload the configuration file
-bindsym mod4+Shift+q reload
+bindsym mod1+Shift+q reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+q restart
 
@@ -225,9 +224,9 @@ bindsym $mod+Control+r mode "resize"
 # polybar exec
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 # Misc Controls
-bindsym XF86AudioRaiseVolume    exec amixer -q -D pulse sset Master 5%+
-bindsym XF86AudioLowerVolume    exec amixer -q -D pulse sset Master 5%-
-bindsym XF86AudioMute           exec amixer -q -D pulse sset Master toggle
+bindsym XF86AudioRaiseVolume    exec amixer -q sset Master 5%+
+bindsym XF86AudioLowerVolume    exec amixer -q sset Master 5%-
+bindsym XF86AudioMute           exec amixer -q sset Master toggle
 bindsym XF86MonBrightnessDown   exec xbacklight -dec 10
 bindsym XF86MonBrightnessUp     exec xbacklight -inc 10
 bindsym XF86AudioPlay           exec mpc toggle

@@ -61,7 +61,7 @@ song_columns_list_format = "(6)[]{} (25)[blue]{a} (34)[white]{t|f} (5f)[magenta]
 color1 = "white"
 color2 = "blue"
 
-song_list_format = " %t $R%a | $R%b                         "
+song_list_format = " %t $R%a | $R%b "
 
 song_status_format = "$b$7♫ $2%a $4⟫$3⟫ $8%t $4⟫$3⟫ $5%b "
 

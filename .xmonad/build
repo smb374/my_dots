@@ -1,7 +1,7 @@
 #!/bin/sh
 # ~/.xmonad/build
 exec stack ghc -- \
-     -O2 \
+     -O \
      -optc-ffast-math \
      --make xmonad.hs \
      -i \

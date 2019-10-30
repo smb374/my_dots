@@ -68,13 +68,13 @@ spectrwm_startup () {
 xrdb ~/.Xresources
 xrandr --auto
 xsetroot -cursor_name left_ptr
-export MONITOR=$(polybar -m|tail -1|sed -e 's/:.*$//g')
 xset m 0 0
 
-exec i3
+# exec startxfce4
 # exec $HOME/.xmonad/xmonad-x86_64-linux
 # systemctl --user restart mpd 2>/dev/null
-# exec ~/.local/bin/xmonad
+# exec xmonad
+exec i3
 # exec bspwm
 # exec 2bwm
 # dwm_startup

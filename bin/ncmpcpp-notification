@@ -1,7 +1,7 @@
 #!/bin/sh
 
-~/rust_prac/mpd_cover2/target/debug/mpd_cover2 && ~/rust_prac/notify2/target/debug/notify2
-src=$(~/rust_prac/get_cover_path/target/debug/get_cover_path)
-COVER="${src}.resized.png"
-convert "${src}" -resize x200 "${COVER}"
-printf "\e]20;${COVER};14x90+99+30:op=keep-aspect;\a"
+bash -c '~/rust_prac/mpd_cover2/target/release/mpd_cover2 && ~/rust_prac/notify2/target/release/notify2' &
+# src=$(~/rust_prac/get_cover_path/target/debug/get_cover_path)
+# COVER="${src}.resized.png"
+# convert "${src}" -resize x200 "${COVER}"
+# printf "\e]20;${COVER};14x90+99+30:op=keep-aspect;\a"

@@ -670,9 +670,10 @@ let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
 let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
 let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
 let g:haskell_backpack = 1                " to enable highlighting of backpack keywords"
+let g:haskell_indent_disable = 0
 "" vim-hindent
 let g:hindent_on_save = 0
-let g:hindent_indent_size = 8
+let g:hindent_indent_size = 4
 
 " Trigger configuration. Do not use <tab> if you use
 " https://github.com/Valloric/YouCompleteMe.
@@ -680,7 +681,7 @@ let g:UltiSnipsExpandTrigger='<S-tab>'
 let g:UltiSnipsJumpForwardTrigger='<c-b>'
 let g:UltiSnipsJumpBackwardTrigger='<c-z>'
 " hie
-let g:LanguageClient_serverCommands = { 'haskell': ['/home/thomas/.local/bin/hie-wrapper'] }
+let g:LanguageClient_serverCommands = { 'haskell': ['/home/thomas/.local/bin/hie'] }
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 map <Leader>lk :call LanguageClient#textDocument_hover()<CR>
 map <Leader>lg :call LanguageClient#textDocument_definition()<CR>
