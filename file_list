@@ -25,7 +25,6 @@
 .zsh_plugins.sh
 .zsh_plugins.txt
 .zshrc
-README.md
 bin/albumart
 bin/backlight
 bin/backlight.pl
@@ -45,10 +44,5 @@ bin/ncmpcpp-notification
 bin/stumpwm.ros
 bin/volume
 bin/xmonad-log
-dwm/README.md
 dwm/config.h
-nixos/configuration.nix
-nixos/hardware-configuration.nix
-slstatus/config.h
-st/README.md
 st/config.h
